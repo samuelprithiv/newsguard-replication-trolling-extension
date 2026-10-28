@@ -1,0 +1,1886 @@
+---
+title: "Final Replication Project: How Can We Stop the Spread of Online Misinformation? (Experiments)"
+authors: "Samuel Prithiv , Co-Author 1 , Co-Author 2"
+date: "`r format(Sys.time(), '%B %d, %Y | %H:%M:%S | %Z')`"
+output:
+  html_document:
+    #code_folding: hide
+    df_print: paged
+    highlight: tango
+    number_sections: no
+    theme: cosmo
+    toc: no
+  pdf_document:
+    toc: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+# Set CRAN mirror
+options(repos = "https://cran.r-project.org")
+
+```
+
+------------------------------------------------------------------------
+
+## Section 1: Paper Summary
+
+### 1. What is the research question?
+The authors explore the effect of source credibility labels on news “diet” quality. In particular, with the increasing risks associated with the proliferation of digital misinformation, the research aims to evaluate the impact of informational labels embedded in users’ social feeds and search engine result pages (SERPs) on a user’s perceived truthfulness of an article. These themes are captured in the paper’s three leading hypotheses (Aslett et al., 2022, p. 3):
+
+*H1: Do infeed source reliability labels shift downstream news and information consumption from unreliable sources known for publishing misleading or false content to more reliable sources?*
+
+*H2: Do infeed source reliability labels increase trust in mainstream media and reliable sources?*
+
+*H3: Do infeed source reliability labels mitigate phenomena associated with democratic dysfunction (i.e., affective polarisation and political cynicism)?*
+
+
+### 2. What is the dependent variable? What is the treatment?
+**Treatment Variable:** The treatment installation of the NewsGuard web browser extension achieved through random participant incentivization. This extension provides source reliability labels embedded directly into users' search engine results pages and social media feeds. These labels use colour-coded "shield" icons to show how trustworthy different news sources are online.
+
+**Dependent Variables:**  The outcomes observed in this study generally related to facets of news diet consumption.  In particular, the dependent variables that were measured are organized according to the above hypotheses as follows: (1) upward and downward shifts of reliable and unreliable news sources (i.e., pushing unreliable news websites to the second page of search results so that reliable sources would appear on the first page); (2) trust in mainstream media and reliable sources measured on a 4-point scale from "no trust at all" to "a lot" of trust; and (3) participation in democratic dysfunction (i.e., affective polarisation and political cynicism) demonstrated by a participant's judgement on true and false statements of politically controversial topics. 
+
+
+### 3. Why is there a causal identification challenge here, and what are the exact sources of confounding? 
+Since participants were only randomly encouraged to install the extension, and not all complied, it is difficult to isolate the effect of NewsGuard’s credibility labels on the news diet of citizens. Studies have shown that source labels do affect selective exposure, however, it is inconclusive if these cues affect the susceptibility to misinformation. The authors identify that this may be due to the lack of knowledge about the various sources on the part of participants to make useful inferences based on just the publisher’s name or logo. Another challenge with using online intervention tools to reduce exposure to misinformation is balancing this objective with other unintended negative consequences such as suppressing freedom of expression or individual autonomy. (Aslett et al., 2022, p. 1)
+
+However, even if the aforementioned challenges are accounted for, in a partisan age, it is difficult to shift perceptions of individuals using labels that indicate source credibility. Previously held partisan leanings could be a major confounder in this research design. The authors note that limited exposure to low credibility sites might also contribute to the lack of a statistically significant effect. (Aslett et al., 2022, p. 2)
+
+
+### 4. How do the authors propose to address this identification challenge? What method do they use? 
+To isolate the effect of the NewsGuard extension on news diet consumption, the researchers randomized the treatment assignment by randomly encouraging (via incentive) installation. To remedy the challenge of audience's inference based on just publisher name or logo, the NewsGuard displays a simple label along with independently verified information. The expert rating is conducted on a set of transparent criteria that make sources more credible. (Aslett et al., 2022, p. 2)
+
+The authors grant that interventions utilising source credibility are one of the weakest methods to combat misinformation. However, the Newsguard labels differed in two important ways from traditional interventions. Firstly, they include institutions, respected individuals and other sources worthy of trust in society. Secondly, NewsGuard displays expert ratings alongside each article instead of rating the efficacy of corrections to individual pieces of misinformation. (Aslett et al., 2022, p. 2)
+
+Lastly, to address the limited exposure of participants to low credibility news sources, the decile of participants with the highest consumption level of misinformation were made a focus in the study to study NewsGuard’s effects. (Aslett et al., 2022, p. 3)
+
+
+### 5. What are the assumptions under which their method yields a causal effect? 
+There are several implicit assumptions made in the authors’ methodology that yielded the study’s outcomes (*which is that there is no significant causal effect between the treatment variable and impact*). First, the authors assume that the treatment assignment was truly random in nature because it the incentive prompt was done randomly. There was no consideration of the mechanism for random assignment (i.e., financial incentive) was in itself free from bias. Second, the authors have taken pre-treatment survey responses at face value and do not expressly consider that self-assessment on different factors (e.g., media trust, political cynicism, incidence of affective polarisation, etc.) was not under or over reported via a Hawthorne effect of simply participating in the study. Finally, there are no temporal considerations made in the research design. The authors instead seem to assume that the behaviours observed within the participants would be consistent across time and not influenced by certain major current events such as war outbreaks or federal elections (which did not occur during the period of observation). 
+
+
+### 6. What are some potential challenges to these identification assumptions? 
+First, the authors assume that the treatment assignment was truly random in nature, and that those who complied to the incentive to install the NewsGuard web extension were not predisposed, in one way or another, to have significant news consumption behaviours. One could argue that there is risk of selecting certain socioeconomic classes when using financial incentives as a form of randomization. However, the authors were able to circumvent such selection bias as they found that treatment and control group sorting “were [not] statistically different across income, race, partisanship, education, and gender” (Aslett et al., 2022, p. 8).
+
+Second, the Hawthorne effect presents a notable challenge in this study. In this context, participants may minimize or exaggerate their responses to certain polarizing questions simply because they are a part of a research study. This alteration in responses can compromise the accuracy of the data and potentially lead to incorrect conclusions about the study's findings. Third, the challenge that arises with the time-consistency assumption is that major events like wars or elections can have a big impact on people's behavior, especially regarding how they consume news. Such events can be incredibly divisive and can cause people to engage in irregular behaviour-- seeking out unreliable source of information to confirm their own beliefs. Thus, a long-term study would be beneficial in this case because such events may trigger spikes in the consumption of unreliable news sources.
+
+Finally, it is critical to note that this experiment seems to be overspecified as it controls for tens and tens of variables. Though unrelated to the assumptions above, it is worth noting this issue as it raises the risk of putting strain on the data sample and reducing the interpretability of the independent variables. Trusting the statistically insignificant findings of the paper is therefore difficult because of these overspecification challenges. 
+
+------------------------------------------------------------------------
+
+## Section 2: Figure Replication
+
+### Download Packages and Libraries
+```{r}
+# Packages needed: texreg, ivpack (install once in the console)
+
+#Load Libraries:
+library(tidyverse)
+library(dplyr)
+library(AER)
+library(glmnet)
+library(estimatr)
+library(huxtable)
+library(magrittr)
+library(texreg)
+
+```
+
+
+### Clean Data
+```{r}
+#Load in libraries:
+library(dplyr)
+
+
+#Read in Survey Wave 1 Data
+Wave_1_Data <- read.csv('data/NYUU0017_w1_OUTPUT.csv')
+#Read in Survey Wave 2 Data
+Wave_2_Data <- read.csv('data/NYUU0017_w2_OUTPUT.csv')
+
+#Change the column names that were identical in Wave 1 and Wave 2
+colnames(Wave_2_Data)[89:114] <- c('operating_system_w2',
+                                   'web_browser_w2',
+                                   'device_w2',
+                                   'birthyr_w2',
+                                   'gender_w2',
+                                   'race_w2',
+                                   'educ_w2',
+                                   'marstat_w2',
+                                   'employ_w2',
+                                   'faminc_new_w2',
+                                   'pid3_w2',
+                                   'pid7_w2',
+                                   'presvote16post_w2',
+                                   'inputzip_w2',
+                                   'inputstate_w2',
+                                   'region_w2',
+                                   'votereg_w2',
+                                   'ideo5_w2',
+                                   'newsint_w2',
+                                   'religpew_w2',
+                                   'pew_churatd_w2',
+                                   'pew_bornagain_w2',
+                                   'pew_religimp_w2',
+                                   'pew_prayer_w2',
+                                   'startime_w2',
+                                   'endtime_w2')
+
+colnames(Wave_2_Data)[1:2] <- c('caseid_w2',
+                                'weight_w2')  
+
+colnames(Wave_2_Data)[5] <- c('visa1_w2')                           
+
+#Merge based on caseid in Wave 1 survey and caseid_w1 in Wave 2 Survey
+dataframe_1 <- merge(Wave_1_Data,Wave_2_Data,by.x='caseid',by.y='caseid_w1')
+
+
+#Create income score variable (income_score)
+dataframe_1$faminc_new  <- factor(dataframe_1$faminc_new , levels = c("Less than $10,000",
+                                                                      "$10,000 - $19,999",
+                                                                      "$20,000 - $29,999",
+                                                                      "$30,000 - $39,999",
+                                                                      "$40,000 - $49,999",
+                                                                      "$50,000 - $59,999",
+                                                                      "$60,000 - $69,999",
+                                                                      "$70,000 - $79,999",
+                                                                      "$80,000 - $89,999",
+                                                                      "$90,000 - $99,999",
+                                                                      "$100,000 - $119,999",
+                                                                      "$120,000 - $149,999",
+                                                                      "$150,000 - $199,999",
+                                                                      "$200,000 - $249,999",
+                                                                      "$250,000 - $349,999",
+                                                                      "$350,000 - $499,999",
+                                                                      "$500,000 or more"))
+dataframe_1$income_score  <- as.numeric(dataframe_1$faminc_new)
+
+#Create treatment variable (Treated)
+dataframe_1$plugin_treat <- as.character(dataframe_1$plugin_treat)
+dataframe_1$Treated <- ifelse(dataframe_1$plugin_treat == 'Offered plug-in',1,0)
+
+#Create political cynicism variable (Wave 1: Pol_cyn_1 ; Wave 2: Pol_cyn_2)
+dataframe_1$SM  <- factor(dataframe_1$SM, levels = c("Hardly any",
+                                                     "Not very many",
+                                                     "Quite a few"))
+dataframe_1$Pol_cyn_1  <- as.numeric(dataframe_1$SM)
+dataframe_1$SM_w2  <- factor(dataframe_1$SM_w2, levels = c("Hardly any",
+                                                           "Not very many",
+                                                           "Quite a few"))
+dataframe_1$Pol_cyn_2  <- as.numeric(dataframe_1$SM_w2)
+
+##Create Affective Polarization: variable (Wave 1: aff_pol_w1 ; Wave 2: aff_pol_w2)
+dataframe_1$SMP3001 <- as.character(dataframe_1$SMP3001)
+dataframe_1$SMP3001 <- as.numeric(dataframe_1$SMP3001)
+dataframe_1$SMP3001_w2 <- as.character(dataframe_1$SMP3001_w2)
+dataframe_1$SMP3001_w2 <- as.numeric(dataframe_1$SMP3001_w2)
+dataframe_1$SMP3002 <- as.character(dataframe_1$SMP3002)
+dataframe_1$SMP3002 <- as.numeric(dataframe_1$SMP3002)
+dataframe_1$SMP3002_w2 <- as.character(dataframe_1$SMP3002_w2)
+dataframe_1$SMP3002_w2 <- as.numeric(dataframe_1$SMP3002_w2)
+dataframe_1$aff_pol_w1 <- abs((dataframe_1$SMP3001 - dataframe_1$SMP3002))
+dataframe_1$aff_pol_w2 <- abs((dataframe_1$SMP3001_w2 - dataframe_1$SMP3002_w2))
+dataframe_1$diff_aff_pol <- abs((dataframe_1$aff_pol_w1 - dataframe_1$aff_pol_w2))
+dataframe_1$diff_aff_pol <- as.numeric(dataframe_1$diff_aff_pol)
+
+## Create Dummy Variables for the browser that each respondent used (IE_dummy,Chrome_dummy,Firefox_dummy,Safari_dummy):
+dataframe_1$web_browser <- as.character(dataframe_1$web_browser)
+dataframe_1$IE_dummy <- ifelse(startsWith(dataframe_1$web_browser,'MS'),1,0)
+dataframe_1$Chrome_dummy <- ifelse(startsWith(dataframe_1$web_browser,'Chrome'),1,0)
+dataframe_1$Firefox_dummy <- ifelse(startsWith(dataframe_1$web_browser,'Firefox'),1,0)
+dataframe_1$Safari_dummy <- ifelse(startsWith(dataframe_1$web_browser,'Safari'),1,0)
+dataframe_1$N_Safari_dummy <- ifelse(startsWith(dataframe_1$web_browser,'Safari'),0,1)
+
+
+##Create Variables for the trust of different news producers:
+
+#Trust in Fox News (Wave 1):
+dataframe_1$SMP67007  <- factor(dataframe_1$SMP67007, levels = c('Not at all',
+                                                                 'Not too much',
+                                                                 'Some',
+                                                                 'A lot'))
+dataframe_1$Fox_Trust_1 <- as.numeric(dataframe_1$SMP67007)
+
+
+#Trust in Fox News (Wave 2):
+dataframe_1$SMP67007_w2  <- factor(dataframe_1$SMP67007_w2, levels = c('Not at all',
+                                                                       'Not too much',
+                                                                       'Some',
+                                                                       'A lot'))
+dataframe_1$Fox_Trust_2 <- as.numeric(dataframe_1$SMP67007_w2)
+
+
+
+#Trust in CNN (Wave 1):
+dataframe_1$SMP67008  <- factor(dataframe_1$SMP67008, levels = c('Not at all',
+                                                                 'Not too much',
+                                                                 'Some',
+                                                                 'A lot'))
+dataframe_1$CNN_Trust_1 <- as.numeric(dataframe_1$SMP67008)
+
+
+#Trust in CNN (Wave 2):
+dataframe_1$SMP67008_w2  <- factor(dataframe_1$SMP67008_w2, levels = c('Not at all',
+                                                                       'Not too much',
+                                                                       'Some',
+                                                                       'A lot'))
+dataframe_1$CNN_Trust_2 <- as.numeric(dataframe_1$SMP67008_w2)
+
+
+
+#Trust in MSNBC (Wave 1):
+dataframe_1$SMP67009  <- factor(dataframe_1$SMP67009, levels = c('Not at all',
+                                                                 'Not too much',
+                                                                 'Some',
+                                                                 'A lot'))
+dataframe_1$MSNBC_Trust_1 <- as.numeric(dataframe_1$SMP67009)
+
+#Trust in MSNBC (Wave 2):
+dataframe_1$SMP67009_w2  <- factor(dataframe_1$SMP67009_w2, levels = c('Not at all',
+                                                                       'Not too much',
+                                                                       'Some',
+                                                                       'A lot'))
+
+dataframe_1$MSNBC_Trust_2 <- as.numeric(dataframe_1$SMP67009_w2)
+
+#Trust in CBS (Wave 1):
+dataframe_1$SMP67010  <- factor(dataframe_1$SMP67010, levels = c('Not at all',
+                                                                 'Not too much',
+                                                                 'Some',
+                                                                 'A lot'))
+
+dataframe_1$CBS_Trust_1 <- as.numeric(dataframe_1$SMP67010)
+
+
+#Trust in CBS (Wave 2):
+dataframe_1$SMP67010_w2  <- factor(dataframe_1$SMP67010_w2, levels = c('Not at all',
+                                                                       'Not too much',
+                                                                       'Some',
+                                                                       'A lot'))
+
+dataframe_1$CBS_Trust_2 <- as.numeric(dataframe_1$SMP67010_w2)
+
+
+
+#Trust in ABC (Wave 1):
+dataframe_1$SMP67011  <- factor(dataframe_1$SMP67011, levels = c('Not at all',
+                                                                 'Not too much',
+                                                                 'Some',
+                                                                 'A lot'))
+dataframe_1$ABC_Trust_1 <- as.numeric(dataframe_1$SMP67011)
+
+#Trust in ABC (Wave 2):
+dataframe_1$SMP67011_w2  <- factor(dataframe_1$SMP67011_w2, levels = c('Not at all',
+                                                                       'Not too much',
+                                                                       'Some',
+                                                                       'A lot'))
+
+dataframe_1$ABC_Trust_2 <- as.numeric(dataframe_1$SMP67011_w2)
+
+#Trust in NBC (Wave 1):
+dataframe_1$SMP67012  <- factor(dataframe_1$SMP67012, levels = c('Not at all',
+                                                                 'Not too much',
+                                                                 'Some',
+                                                                 'A lot'))
+dataframe_1$NBC_Trust_1 <- as.numeric(dataframe_1$SMP67012)
+
+
+
+dataframe_1$SMP67012_w2  <- factor(dataframe_1$SMP67012_w2, levels = c('Not at all',
+                                                                       'Not too much',
+                                                                       'Some',
+                                                                       'A lot'))
+
+dataframe_1$NBC_Trust_2 <- as.numeric(dataframe_1$SMP67012_w2)
+
+
+
+##Create digital literacy variable:
+
+#Run for loop to set the columns 18-23 as factors with the same levels
+dl_matrix <- matrix(nrow=nrow(dataframe_1))
+for(i in 18:23){
+  dataframe_1[,i]  <- factor(dataframe_1[,i], levels = c('No Understanding',
+                                                         '2',
+                                                         '3',
+                                                         '4',
+                                                         'Full Understanding'))
+  
+  dl_matrix <- cbind(dl_matrix,dataframe_1[,i])
+}
+#Remove the first row in the dataset (Consists solely of NAs)
+dl_matrix <- dl_matrix[,-1]
+
+#Run for loop to set the columns 25-26 as factors with the same levels
+for(i in c(25,26)){
+  dataframe_1[,i]  <- factor(dataframe_1[,i], levels = c('Strongly Disagree',
+                                                         '-3',
+                                                         '-2',
+                                                         '-1',
+                                                         '0',
+                                                         '1',
+                                                         '2',
+                                                         '3',
+                                                         'Strongly Agree'))
+  dl_matrix <- cbind(dl_matrix,dataframe_1[,i])
+}
+
+#Run for loop to set the columns 24-27 as factors with the same levels
+for(i in c(24,27)){
+  dataframe_1[,i]  <- factor(dataframe_1[,i], levels = c('Strongly Agree',
+                                                         '3',
+                                                         '2',
+                                                         '1',
+                                                         '0',
+                                                         '-1',
+                                                         '-2',
+                                                         '-3',
+                                                         'Strongly Disagree'))
+  dl_matrix <- cbind(dl_matrix,dataframe_1[,i])
+}
+
+#We take the matrix with the all of the answers to our digital literacy question and convert the matrix into 
+dl_matrix <- data.frame(dl_matrix)
+
+#Rename the columns to correspond with each digital literacy question:
+colnames(dl_matrix) <- c('DL_1','DL_2','DL_3','DL_4','DL_5','DL_6','DL_7','DL_8','DL_9','DL_10')
+
+#Sum the values assigned from each digital literacy question:
+dl_matrix <- dl_matrix %>% mutate(Total_DL = DL_1 + DL_2 + DL_3 + DL_4 + DL_5 + DL_6 + DL_7 + DL_8 + DL_9 + DL_10)
+dl_matrix <- dl_matrix %>% select(Total_DL)
+
+dl_matrix <- dl_matrix %>% select(Total_DL)
+
+dataframe_1 <- cbind(dataframe_1,dl_matrix)
+
+#Make this the inverse:
+dataframe_1$Inverse_DL <- 66-dataframe_1$Total_DL
+dataframe_1$Inverse_DL <- abs(dataframe_1$Inverse_DL)
+
+
+#Create Scientific Misinformation Index:
+
+#Set factor levels for this scientific misinformation Q:
+dataframe_1$SMP5361  <- factor(dataframe_1$SMP5361, levels = c('Strongly agree',
+                                                               'Agree',
+                                                               'Neither agree nor disagree',
+                                                               'Disagree',
+                                                               'Strongly disagree'))
+
+#Set factor levels for this scientific misinformation Q:
+dataframe_1$SMP5362  <- factor(dataframe_1$SMP5362, levels = c('Strongly disagree',
+                                                               'Disagree',
+                                                               'Neither agree nor disagree',
+                                                               'Agree',
+                                                               'Strongly agree'))
+
+#Set factor levels for this scientific misinformation Q:
+dataframe_1$SMP5363  <- factor(dataframe_1$SMP5363, levels = c('Strongly disagree',
+                                                               'Disagree',
+                                                               'Neither agree nor disagree',
+                                                               'Agree',
+                                                               'Strongly agree'))
+
+#Set factor levels for this scientific misinformation Q:
+dataframe_1$SMP5364  <- factor(dataframe_1$SMP5364, levels = c('Strongly disagree',
+                                                               'Disagree',
+                                                               'Neither agree nor disagree',
+                                                               'Agree',
+                                                               'Strongly agree'))
+
+#Convert factors into numeric variables:
+dataframe_1$SMP5361  <- as.numeric(dataframe_1$SMP5364)
+dataframe_1$SMP5362  <- as.numeric(dataframe_1$SMP5362)
+dataframe_1$SMP5363  <- as.numeric(dataframe_1$SMP5363)
+dataframe_1$SMP5364  <- as.numeric(dataframe_1$SMP5364)
+
+
+#Create average of numeric values to produce the scientific misinformation index:
+dataframe_1 <- dataframe_1 %>% mutate(Total_Science_Misinfo = (SMP5361 + SMP5362 + SMP5363 + SMP5364)/4)
+
+
+#SMP1020A:	Look at Facebook
+#SMP1020B:	Post things on Facebook
+
+#Set factor levels for how often respondent looks at Twitter:
+dataframe_1$SMP1019A <- factor(dataframe_1$SMP1019A, levels = c("Never",
+                                                                "Less often",
+                                                                "Every few weeks",
+                                                                "1 to 2 days a week",
+                                                                "3 to 6 days a week",
+                                                                "About once a day",
+                                                                "Several times a day",
+                                                                "At least 10 times a day"))
+
+
+#Set factor levels for how often respondent posts on Twitter:
+dataframe_1$SMP1019B <- factor(dataframe_1$SMP1019B, levels = c("Never",
+                                                                "Less often",
+                                                                "Every few weeks",
+                                                                "1 to 2 days a week",
+                                                                "3 to 6 days a week",
+                                                                "About once a day",
+                                                                "Several times a day",
+                                                                "At least 10 times a day"))
+
+
+#Set factor levels for how often respondent looks at Facebook:
+dataframe_1$SMP1020A <- factor(dataframe_1$SMP1020A, levels = c("Never",
+                                                                "Less often",
+                                                                "Every few weeks",
+                                                                "1 to 2 days a week",
+                                                                "3 to 6 days a week",
+                                                                "About once a day",
+                                                                "Several times a day",
+                                                                "At least 10 times a day"))
+
+#Set factor levels for how often respondent posts on Facebook:
+dataframe_1$SMP1020B <- factor(dataframe_1$SMP1020B, levels = c("Never",
+                                                                "Less often",
+                                                                "Every few weeks",
+                                                                "1 to 2 days a week",
+                                                                "3 to 6 days a week",
+                                                                "About once a day",
+                                                                "Several times a day",
+                                                                "At least 10 times a day"))
+
+#Convert factors into numeric variables:
+dataframe_1$SMP1019A <- as.numeric(dataframe_1$SMP1019A)
+dataframe_1$SMP1020A <- as.numeric(dataframe_1$SMP1020A)
+dataframe_1$SMP1019B <- as.numeric(dataframe_1$SMP1019B)
+dataframe_1$SMP1020B <- as.numeric(dataframe_1$SMP1020B)
+
+#Create dummy variables for if each respondent has an account on Twitter or Facebook:
+dataframe_1$Twitter_Acct <- ifelse(dataframe_1$SMP1012_18_1 == 'selected',1,0)
+dataframe_1$FB_Acct <- ifelse(dataframe_1$SMP1012_18_2 == 'selected',1,0)
+
+#Create dummy variables for if each respondent has an account on both Twitter or Facebook:
+dataframe_1$FB_Twitt_Acct <- ifelse(dataframe_1$Twitter_Acct == 1 | dataframe_1$FB_Acct == 1,1,0)
+
+#Add a zero value for respondents who do not have an account on Twitter or Facebook:
+dataframe_1$SMP1019A <- ifelse(dataframe_1$Twitter_Acct == 0,0,dataframe_1$SMP1019A)
+dataframe_1$SMP1019B <- ifelse(dataframe_1$Twitter_Acct == 0,0,dataframe_1$SMP1019B)
+dataframe_1$SMP1020B <- ifelse(dataframe_1$FB_Acct == 0,0,dataframe_1$SMP1020B)
+dataframe_1$SMP1020A <- ifelse(dataframe_1$FB_Acct == 0,0,dataframe_1$SMP1020A)
+
+#Create social media use index:
+dataframe_1$Social_Media_Use <- (dataframe_1$SMP1019A + dataframe_1$SMP1020A + dataframe_1$SMP1019B + dataframe_1$SMP1020B)/4
+
+
+#Party ID Questions:
+
+#Ensure that variables are strings:
+dataframe_1$SMP8202A <- as.character(dataframe_1$SMP8202A) 
+dataframe_1$SMP8202B <- as.character(dataframe_1$SMP8202B) 
+dataframe_1$SMP8202C <- as.character(dataframe_1$SMP8202C) 
+dataframe_1$SMP8202D <- as.character(dataframe_1$SMP8202D) 
+
+#Create Party-ID variable with values (-3 = Strong Democrat ; 3 = Strong Republican):
+dataframe_1$Party_ID <- dataframe_1$SMP8202A
+dataframe_1$Party_ID <- ifelse(dataframe_1$Party_ID == 'Independent',dataframe_1$SMP8202B,dataframe_1$Party_ID)
+dataframe_1$Party_ID <- ifelse(dataframe_1$Party_ID == 'A Democrat',dataframe_1$SMP8202C,dataframe_1$Party_ID)
+dataframe_1$Party_ID <- ifelse(dataframe_1$Party_ID == 'A Republican',dataframe_1$SMP8202D,dataframe_1$Party_ID)
+
+dataframe_1$party_score <- ifelse(dataframe_1$Party_ID == "Strong Democrat",1,0)
+dataframe_1$party_score <- ifelse(dataframe_1$Party_ID == "Not very strong Democrat",2,dataframe_1$party_score)
+dataframe_1$party_score <- ifelse(dataframe_1$Party_ID == "Closer to the Democratic Party",3,dataframe_1$party_score)
+dataframe_1$party_score <- ifelse(dataframe_1$Party_ID == "Strong Republican",7,dataframe_1$party_score)
+dataframe_1$party_score <- ifelse(dataframe_1$Party_ID == "Not very strong Republican",6,dataframe_1$party_score)
+dataframe_1$party_score <- ifelse(dataframe_1$Party_ID == "Closer to the Republican Party",5,dataframe_1$party_score)
+dataframe_1$party_score <- ifelse(dataframe_1$Party_ID == "Neither",4,dataframe_1$party_score)
+dataframe_1$party_score <- ifelse(dataframe_1$Party_ID == "Something else",4,dataframe_1$party_score)
+
+
+
+#Create Dummy variable for race (White):
+dataframe_1 <- dataframe_1 %>% mutate(race_white = ifelse(race == 'White',1,0))
+
+
+#Create education variable with numeric values:
+dataframe_1$educ <- factor(dataframe_1$educ, levels = c('No HS',
+                                                        'High school graduate',
+                                                        'Some college',
+                                                        '2-year',
+                                                        '4-year',
+                                                        'Post-grad'))
+dataframe_1$educ_score <- as.numeric(dataframe_1$educ)
+
+#Create gender dummy variable (1 = Female):
+dataframe_1$gender <- as.character(dataframe_1$gender)
+dataframe_1 <- dataframe_1 %>% mutate(gender_dummy_fem = ifelse(gender == 'Female',1,0))
+
+
+##Create variable for age:
+dataframe_1 <- dataframe_1 %>% mutate(Age = 2020 - birthyr)
+dataframe_1 <- dataframe_1 %>% mutate(Age_Sq = Age^2)
+dataframe_1 <- dataframe_1 %>% mutate(DL_inverse = Total_DL - (max(Total_DL,na.rm=T)+1))
+
+
+#Create Media Trust measure (Wave 1: Trust_Media_w1 ; Wave 2: Trust_Media_w2):
+dataframe_1$SMP  <- factor(dataframe_1$SMP, levels = c('Keeps political leaders from doing their job',
+                                                       'Stops political leaders from doing things that shouldn’t be done'))
+
+dataframe_1$SMP69002  <- factor(dataframe_1$SMP69002, levels = c('Tend to favor one side',
+                                                                 'Deal fairly with all sides'))
+
+dataframe_1$SMP69003  <- factor(dataframe_1$SMP69003, levels = c('All the time',
+                                                                 'Most of the time',
+                                                                 'About half the time',
+                                                                 'Once in a while',
+                                                                 'Never'))
+
+dataframe_1$SMP_w2  <- factor(dataframe_1$SMP_w2, levels = c('Keeps political leaders from doing their job',
+                                                             'Stops political leaders from doing things that shouldn’t be done'))
+
+dataframe_1$SMP69002_w2  <- factor(dataframe_1$SMP69002_w2, levels = c('Tend to favor one side',
+                                                                       'Deal fairly with all sides'))
+
+dataframe_1$SMP69003_w2  <- factor(dataframe_1$SMP69003_w2, levels = c('All the time',
+                                                                       'Most of the time',
+                                                                       'About half the time',
+                                                                       'Once in a while',
+                                                                       'Never'))
+
+dataframe_1$SMP <- as.numeric(dataframe_1$SMP)
+dataframe_1$SMP <- dataframe_1$SMP - 1
+dataframe_1$SMP69002 <- as.numeric(dataframe_1$SMP69002)
+dataframe_1$SMP69002 <- dataframe_1$SMP69002 - 1
+dataframe_1$SMP69003 <- as.numeric(dataframe_1$SMP69003)
+dataframe_1$SMP69003 <- dataframe_1$SMP69003 - 1
+dataframe_1$SMP69003 <- dataframe_1$SMP69003/4
+
+dataframe_1$SMP_w2 <- as.numeric(dataframe_1$SMP_w2)
+dataframe_1$SMP_w2 <- dataframe_1$SMP_w2 - 1
+dataframe_1$SMP69002_w2 <- as.numeric(dataframe_1$SMP69002_w2)
+dataframe_1$SMP69002_w2 <- dataframe_1$SMP69002_w2 - 1
+dataframe_1$SMP69003_w2 <- as.numeric(dataframe_1$SMP69003_w2)
+dataframe_1$SMP69003_w2 <- dataframe_1$SMP69003_w2 - 1
+dataframe_1$SMP69003_w2 <- dataframe_1$SMP69003_w2/4
+
+dataframe_1$Trust_Media_w1 <- as.numeric(dataframe_1$SMP) + as.numeric(dataframe_1$SMP69002) + as.numeric(dataframe_1$SMP69003)
+dataframe_1$Trust_Media_w2 <- as.numeric(dataframe_1$SMP_w2) + as.numeric(dataframe_1$SMP69002_w2) + as.numeric(dataframe_1$SMP69003_w2)
+
+
+
+
+
+
+#Read in compliance check data (compliance_check_1,compliance_check_2,Complied):
+Compliance_Check <- read.csv('data/Compliance_Check_Data.csv')
+
+#Only use compliance checks during the period in which the first wave survey was out
+First_Check <- Compliance_Check %>% filter(timestamp < 1592500000000)
+#Use the last compliance check for each respondent in this time frame:
+First_Check <- First_Check %>% group_by(user_id) %>% top_n(1, timestamp)
+#Set column names:
+colnames(First_Check) <- c('user_id','compliance_check_1','timestamp_1')
+
+mean(First_Check$compliance_check_1,na.rm=T)
+
+
+#Only use compliance checks during the period in which the second wave survey was out
+Second_Check <- Compliance_Check %>% filter(timestamp > 1592500000000)
+#Use the last compliance check for each respondent in this time frame:
+Second_Check <- Second_Check %>% group_by(user_id) %>% top_n(1, timestamp)
+#Set column names:
+colnames(Second_Check) <- c('user_id','compliance_check_2','timestamp_2')
+
+#Merge first check with the existing data-frame
+df_1 <- merge(dataframe_1,First_Check,by.x='visa1',by.y='user_id',all.x=T)
+df_new <- df_1 %>% select(visa1,Treated,compliance_check_1,timestamp_1)
+#Merge the second check with the existing data-frame
+df_new_1 <- merge(df_new,Second_Check,by.x='visa1',by.y='user_id',all.x=T)
+
+#Create measure that is only assigned a "1" if the respondent passed both compliance checks:
+df_new_1 <- df_new_1 %>% mutate(Complied = ifelse(compliance_check_1 == 1 & compliance_check_2 == 1,1,0))
+df_new_1 <- df_new_1 %>% mutate(Complied = ifelse(is.na(compliance_check_1),NA,Complied))
+df_new_1 <- df_new_1 %>% mutate(Complied = ifelse(is.na(compliance_check_2),NA,Complied))
+
+#Select only a few variables and merge with existing dataset:
+df_new_2 <- df_new_1 %>% select(visa1,compliance_check_1,compliance_check_2,Complied)
+
+dataframe_1 <- merge(dataframe_1,df_new_2,by='visa1',all.x=T)
+
+
+#Create Ideology Score:
+dataframe_1$SMP8201 <- factor(dataframe_1$SMP8201, levels = c('Very liberal',
+                                                              'Somewhat liberal',
+                                                              'Slightly liberal',
+                                                              'Moderate; middle of the road',
+                                                              'Slightly conservative',
+                                                              'Somewhat conservative',
+                                                              'Very conservative'))
+
+
+dataframe_1$ideo_score <- as.numeric(dataframe_1$SMP8201)
+
+
+#Create COVID-19 Misinformation and Information Index:
+
+#Set factor levels
+dataframe_1$SMP5061_w2 <- factor(dataframe_1$SMP5061_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+#Set factor levels
+dataframe_1$SMP5062_w2 <- factor(dataframe_1$SMP5062_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+
+#Set factor levels
+dataframe_1$SMP5063_w2 <- factor(dataframe_1$SMP5063_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+
+#Set factor levels
+dataframe_1$SMP5064_w2 <- factor(dataframe_1$SMP5064_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+
+#Set factor levels
+dataframe_1$SMP5065_w2 <- factor(dataframe_1$SMP5065_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+
+#Set Convert factors into numeric values:
+dataframe_1$SMP5061_w2 <- as.numeric(dataframe_1$SMP5061_w2)
+dataframe_1$SMP5062_w2 <- as.numeric(dataframe_1$SMP5062_w2)
+dataframe_1$SMP5063_w2 <- as.numeric(dataframe_1$SMP5063_w2)
+dataframe_1$SMP5064_w2 <- as.numeric(dataframe_1$SMP5064_w2)
+dataframe_1$SMP5065_w2 <- as.numeric(dataframe_1$SMP5065_w2)
+
+#Set indices:
+dataframe_1 <- dataframe_1 %>% group_by(visa1)  %>% mutate(Covid_Misinfo_Index_w2 = mean(c(SMP5061_w2,SMP5062_w2,SMP5064_w2),na.rm=T))
+dataframe_1 <- dataframe_1 %>% group_by(visa1)  %>% mutate(Covid_info_Index_w2 = mean(c(SMP5063_w2,SMP5065_w2),na.rm=T))
+
+dataframe_1$Covid_Misinfo_Index_w2 <- dataframe_1$Covid_Misinfo_Index_w2 - 1
+dataframe_1$Covid_info_Index_w2 <- dataframe_1$Covid_info_Index_w2 - 1
+
+
+#Create BLM Misinformation and Information Index:
+
+#Set factor levels:
+dataframe_1$SMP5081_w2 <- factor(dataframe_1$SMP5081_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+
+#Set factor levels:
+dataframe_1$SMP5082_w2 <- factor(dataframe_1$SMP5082_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+
+#Set factor levels:
+dataframe_1$SMP5083_w2 <- factor(dataframe_1$SMP5083_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+
+#Set factor levels:
+dataframe_1$SMP5084_w2 <- factor(dataframe_1$SMP5084_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+
+#Set factor levels:
+dataframe_1$SMP5085_w2 <- factor(dataframe_1$SMP5085_w2, levels = c("Not at all accurate",
+                                                                    "Not very accurate",
+                                                                    "Somewhat accurate",
+                                                                    "Very accurate"))
+
+#Set Convert factors into numeric values:
+dataframe_1$SMP5081_w2 <- as.numeric(dataframe_1$SMP5081_w2)
+dataframe_1$SMP5082_w2 <- as.numeric(dataframe_1$SMP5082_w2)
+dataframe_1$SMP5083_w2 <- as.numeric(dataframe_1$SMP5083_w2)
+dataframe_1$SMP5084_w2 <- as.numeric(dataframe_1$SMP5084_w2)
+dataframe_1$SMP5085_w2 <- as.numeric(dataframe_1$SMP5085_w2)
+
+
+#Set indices:
+dataframe_1 <- dataframe_1 %>% group_by(visa1)  %>% mutate(BLM_Misinfo_Index_w2 = mean(c(SMP5081_w2,SMP5082_w2,SMP5084_w2),na.rm=T))
+dataframe_1 <- dataframe_1 %>% group_by(visa1)  %>% mutate(BLM_info_Index_w2 = mean(c(SMP5083_w2,SMP5085_w2),na.rm=T))
+
+dataframe_1$BLM_Misinfo_Index_w2 <- dataframe_1$BLM_Misinfo_Index_w2 - 1
+dataframe_1$BLM_info_Index_w2 <- dataframe_1$BLM_info_Index_w2 - 1
+
+#Trust and Consumption in news:
+
+#Consumption of news on news networks:
+dataframe_1$SMP4201 <- as.character(dataframe_1$SMP4201)
+unique(dataframe_1$SMP4201)
+dataframe_1$SMP4201 <- factor(dataframe_1$SMP4201, levels = c("Never",
+                                                              "Less Than Once a Week",
+                                                              "At Least Once a Week",
+                                                              "Several Times a Week",
+                                                              "Every Day"))
+dataframe_1$cons_news_n <- as.numeric(dataframe_1$SMP4201)
+
+#Consumption of news on cable television:
+dataframe_1$SMP4202 <- as.character(dataframe_1$SMP4202)
+dataframe_1$SMP4202 <- factor(dataframe_1$SMP4202, levels = c("Never",
+                                                              "Less Than Once a Week",
+                                                              "At Least Once a Week",
+                                                              "Several Times a Week",
+                                                              "Every Day"))
+dataframe_1$cons_cable <- as.numeric(dataframe_1$SMP4202)
+
+
+#Consumption of news in print:
+dataframe_1$SMP4203 <- as.character(dataframe_1$SMP4203)
+dataframe_1$SMP4203 <- factor(dataframe_1$SMP4203, levels = c("Never",
+                                                              "Less Than Once a Week",
+                                                              "At Least Once a Week",
+                                                              "Several Times a Week",
+                                                              "Every Day"))
+dataframe_1$cons_print <- as.numeric(dataframe_1$SMP4203)
+
+#Consumption of news on public radio:
+dataframe_1$SMP4204 <- as.character(dataframe_1$SMP4204)
+dataframe_1$SMP4204 <- factor(dataframe_1$SMP4204, levels = c("Never",
+                                                              "Less Than Once a Week",
+                                                              "At Least Once a Week",
+                                                              "Several Times a Week",
+                                                              "Every Day"))
+dataframe_1$cons_public <- as.numeric(dataframe_1$SMP4204)
+
+
+#Consumption of news on talk radio:
+dataframe_1$SMP4205 <- as.character(dataframe_1$SMP4205)
+dataframe_1$SMP4205 <- factor(dataframe_1$SMP4205, levels = c("Never",
+                                                              "Less Than Once a Week",
+                                                              "At Least Once a Week",
+                                                              "Several Times a Week",
+                                                              "Every Day"))
+dataframe_1$cons_talk <- as.numeric(dataframe_1$SMP4205)
+
+
+#Consumption of news on desktop:
+dataframe_1$SMP4206 <- as.character(dataframe_1$SMP4206)
+dataframe_1$SMP4206 <- factor(dataframe_1$SMP4206, levels = c("Never",
+                                                              "Less Than Once a Week",
+                                                              "At Least Once a Week",
+                                                              "Several Times a Week",
+                                                              "Every Day"))
+dataframe_1$cons_desk <- as.numeric(dataframe_1$SMP4206)
+
+
+#Consumption of news on mobile device:
+dataframe_1$SMP4207 <- as.character(dataframe_1$SMP4207)
+dataframe_1$SMP4207 <- factor(dataframe_1$SMP4207, levels = c("Never",
+                                                              "Less Than Once a Week",
+                                                              "At Least Once a Week",
+                                                              "Several Times a Week",
+                                                              "Every Day"))
+dataframe_1$cons_mobile <- as.numeric(dataframe_1$SMP4207)
+
+
+#Trust in news  on social media:
+dataframe_1$SMP66001 <- as.character(dataframe_1$SMP66001)
+dataframe_1$SMP66002 <- as.character(dataframe_1$SMP66002)
+dataframe_1$SMP66001 <- as.numeric(dataframe_1$SMP66001)
+dataframe_1$SMP66002 <- as.numeric(dataframe_1$SMP66002)
+
+dataframe_1 <- dataframe_1 %>% group_by(caseid) %>% mutate(trust_news_sm = mean(c(SMP66001,SMP66002),na.rm=T))
+
+#Trust in newspapers:
+dataframe_1$SMP67001 <- as.character(dataframe_1$SMP67001)
+dataframe_1$SMP67001 <- factor(dataframe_1$SMP67001, levels = c("Not at all",
+                                                                "Not too much",
+                                                                "Some",
+                                                                "A lot"))
+dataframe_1$trust_news <- as.numeric(dataframe_1$SMP67001)
+
+
+
+
+
+#Create is Fake News a problem in the mainstream media? variable:
+dataframe_1$SMP4310 <- factor(dataframe_1$SMP4310, levels = c("5 - Mistakes by the mainstream media are rare, and I generally find what they report to be credible",
+                                                              "4",
+                                                              "3",
+                                                              "2",
+                                                              "1 - \"Fake news\" is a serious problem affecting the mainstream media"))
+dataframe_1$SMP4310 <- as.numeric(dataframe_1$SMP4310)
+
+dataframe_1$SMP4310<- dataframe_1$SMP4310-1
+mean(dataframe_1$SMP4310,na.rm=T)
+
+
+sd_4310 <- sd(dataframe_1$SMP4310,na.rm=T)
+
+
+
+dataframe_1$SMP4310_w2 <- factor(dataframe_1$SMP4310_w2, levels = c("5 - Mistakes by the mainstream media are rare, and I generally find what they report to be credible",
+                                                                    "4",
+                                                                    "3",
+                                                                    "2",
+                                                                    "1 - \"Fake news\" is a serious problem affecting the mainstream media"))
+dataframe_1$SMP4310_w2 <- as.numeric(dataframe_1$SMP4310_w2)
+
+
+
+
+
+#Fake News is a Problem Variable
+
+
+dataframe_1$SMP4326 <- factor(dataframe_1$SMP4326, levels = c("Not a problem at all",
+                                                              "A small problem",
+                                                              "A moderately big problem",
+                                                              "A very big problem"))
+
+dataframe_1$SMP4326 <- as.numeric(dataframe_1$SMP4326)
+
+
+dataframe_1$SMP4326_w2 <- factor(dataframe_1$SMP4326_w2, levels = c("Not a problem at all",
+                                                                    "A small problem",
+                                                                    "A moderately big problem",
+                                                                    "A very big problem"))
+
+
+dataframe_1$SMP4326_w2 <- as.numeric(dataframe_1$SMP4326_w2)
+
+
+#### Trust in Institutions variable
+dataframe_1$SMP6701 <- as.character(dataframe_1$SMP6701)
+dataframe_1$SMP6701 <- as.numeric(dataframe_1$SMP6701)
+dataframe_1$SMP6702 <- as.character(dataframe_1$SMP6702)
+dataframe_1$SMP6702 <- as.numeric(dataframe_1$SMP6702)
+dataframe_1$SMP6703 <- as.character(dataframe_1$SMP6703)
+dataframe_1$SMP6703 <- as.numeric(dataframe_1$SMP6703)
+dataframe_1$SMP6704 <- as.character(dataframe_1$SMP6704)
+dataframe_1$SMP6704 <- as.numeric(dataframe_1$SMP6704)
+
+dataframe_1$SMP6701_w2 <- as.character(dataframe_1$SMP6701_w2)
+dataframe_1$SMP6701_w2 <- as.numeric(dataframe_1$SMP6701_w2)
+dataframe_1$SMP6702_w2 <- as.character(dataframe_1$SMP6702_w2)
+dataframe_1$SMP6702_w2 <- as.numeric(dataframe_1$SMP6702_w2)
+dataframe_1$SMP6703_w2 <- as.character(dataframe_1$SMP6703_w2)
+dataframe_1$SMP6703_w2 <- as.numeric(dataframe_1$SMP6703_w2)
+dataframe_1$SMP6704_w2 <- as.character(dataframe_1$SMP6704_w2)
+dataframe_1$SMP6704_w2 <- as.numeric(dataframe_1$SMP6704_w2)
+
+dataframe_1 <- dataframe_1 %>% group_by(visa1)  %>% mutate(Trust_inst_w1 = mean(c(SMP6701,SMP6702,SMP6703,SMP6704)))
+dataframe_1 <- dataframe_1 %>% group_by(visa1)  %>% mutate(Trust_inst_w2 = mean(c(SMP6701_w2,SMP6702_w2,SMP6703_w2,SMP6704_w2)))
+
+#Mean consumption of news on mobile and desktop:
+dataframe_1 <- dataframe_1 %>% group_by(visa1) %>% mutate(mean_cons = mean(c(cons_desk,cons_mobile),na.rm=T))
+
+#Create Dummy variable for if we have pulse data for that respondent:
+######Read in pre-treatment Pulse Data:
+Pulse_Pre <- read.csv('data/pulse_vars_pre.csv')
+######Read in post-treatment Pulse Data:
+Pulse_Post <- read.csv('data/pulse_vars_post.csv')
+#Merge Survey Data with digital
+Pulse_data <- Pulse_Pre
+Pulse_data <- merge(Pulse_data,Pulse_Post,by='caseid',all=T)
+####### Pull in DV Data ##############
+Pulse_DV <- read.csv('data/pulse_vars_DV.csv')
+Pulse_data <- merge(Pulse_data,Pulse_DV,by='caseid',all=T)
+Pulse_data$Pulse_Dummy <- 1
+Pulse_data <- Pulse_data %>% select(caseid,Pulse_Dummy)
+dataframe_1<- merge(dataframe_1,Pulse_data,by='caseid',all=T)
+write.csv(dataframe_1,'data/Clean_NewsGuard_Survey_Study.csv')
+
+
+
+################################### Digital Trace Data  (YouGov Pulse Data) ##################################
+
+######Read in pre-treatment Pulse Data:
+Pulse_Pre <- read.csv('data/pulse_vars_pre.csv')
+######Read in post-treatment Pulse Data:
+Pulse_Post <- read.csv('data/pulse_vars_post.csv')
+#Merge Survey Data with digital
+Pulse_data <- merge(dataframe_1,Pulse_Pre,by='caseid',all=T)
+Pulse_data <- merge(Pulse_data,Pulse_Post,by='caseid',all=T)
+####### Pull in DV Data ##############
+Pulse_DV <- read.csv('data/pulse_vars_DV.csv')
+Pulse_data <- merge(Pulse_data,Pulse_DV,by='caseid',all=T)
+Pulse_data <- Pulse_data %>% filter(Pulse_Dummy == 1)
+Pulse_data <- Pulse_data %>% mutate(Prop_Unreliable_NewsG_Score_dv = ifelse(is.na(Average_domain_NewsG_Score_dv),NA,Prop_Unreliable_NewsG_Score_dv))
+Pulse_data <- Pulse_data %>% mutate(Prop_Reliable_NewsG_Score_dv = ifelse(is.na(Average_domain_NewsG_Score_dv),NA,Prop_Reliable_NewsG_Score_dv))
+Pulse_data <- Pulse_data %>% mutate(Prop_Unreliable_NewsG_Score_post = ifelse(is.na(Average_domain_NewsG_Score_post),NA,Prop_Unreliable_NewsG_Score_post))
+Pulse_data <- Pulse_data %>% mutate(Prop_Reliable_NewsG_Score_post = ifelse(is.na(Average_domain_NewsG_Score_post),NA,Prop_Reliable_NewsG_Score_post))
+Pulse_data <- Pulse_data %>% mutate(Prop_Unreliable_NewsG_Score = ifelse(is.na(Average_domain_NewsG_Score),NA,Prop_Unreliable_NewsG_Score))
+Pulse_data <- Pulse_data %>% mutate(Prop_Reliable_NewsG_Score = ifelse(is.na(Average_domain_NewsG_Score),NA,Prop_Reliable_NewsG_Score))
+
+Pulse_data <- Pulse_data %>% mutate(Prop_Unreliable_NewsG_Score_dv_dur = ifelse(is.na(Average_domain_NewsG_Score_dv_dur),NA,Prop_Unreliable_NewsG_Score_dv_dur))
+Pulse_data <- Pulse_data %>% mutate(Prop_Reliable_NewsG_Score_dv_dur = ifelse(is.na(Average_domain_NewsG_Score_dv_dur),NA,Prop_Reliable_NewsG_Score_dv_dur))
+Pulse_data <- Pulse_data %>% mutate(Prop_Unreliable_NewsG_Score_post_dur = ifelse(is.na(Average_domain_NewsG_Score_post_dur),NA,Prop_Unreliable_NewsG_Score_post_dur))
+Pulse_data <- Pulse_data %>% mutate(Prop_Reliable_NewsG_Score_post_dur = ifelse(is.na(Average_domain_NewsG_Score_post_dur),NA,Prop_Reliable_NewsG_Score_post_dur))
+Pulse_data <- Pulse_data %>% mutate(Prop_Unreliable_NewsG_Score_dur = ifelse(is.na(Average_domain_NewsG_Score_dur),NA,Prop_Unreliable_NewsG_Score_dur))
+Pulse_data <- Pulse_data %>% mutate(Prop_Reliable_NewsG_Score_dur = ifelse(is.na(Average_domain_NewsG_Score_dur),NA,Prop_Reliable_NewsG_Score_dur))
+
+Pulse_data$partisanship_news_diet <- as.numeric(Pulse_data$partisanship_news_diet)
+Pulse_data$abs_part <- abs(Pulse_data$partisanship_news_diet)
+
+
+
+
+######Read in pre-treatment Pulse Data:
+Pulse_Pre <- read.csv('data/pulse_vars_pre_ref_All.csv')
+######Read in post-treatment Pulse Data:
+Pulse_Post <- read.csv('data/pulse_vars_post_ref_All.csv')
+#Merge Survey Data with digital
+Pulse_data_All <- Pulse_Pre
+Pulse_data_All <- merge(Pulse_data_All,Pulse_Post,by='caseid',all=T)
+####### Pull in DV Data ##############
+Pulse_DV <- read.csv('data/pulse_vars_dv_ref_All.csv')
+Pulse_data_All <- merge(Pulse_data_All,Pulse_DV,by='caseid',all=T)
+Pulse_data_All <- Pulse_data_All %>% mutate(Prop_Unreliable_NewsG_Score_dv_All_ref = ifelse(is.na(Average_domain_NewsG_Score_dv_All_ref),NA,Prop_Unreliable_NewsG_Score_dv_All_ref))
+Pulse_data_All <- Pulse_data_All %>% mutate(Prop_Reliable_NewsG_Score_dv_All_ref = ifelse(is.na(Average_domain_NewsG_Score_dv_All_ref),NA,Prop_Reliable_NewsG_Score_dv_All_ref))
+Pulse_data_All <- Pulse_data_All %>% mutate(Prop_Unreliable_NewsG_Score_post_All_ref = ifelse(is.na(Average_domain_NewsG_Score_post_All_ref),NA,Prop_Unreliable_NewsG_Score_post_All_ref))
+Pulse_data_All <- Pulse_data_All %>% mutate(Prop_Reliable_NewsG_Score_post_All_ref = ifelse(is.na(Average_domain_NewsG_Score_post_All_ref),NA,Prop_Reliable_NewsG_Score_post_All_ref))
+Pulse_data_All <- Pulse_data_All %>% mutate(Prop_Unreliable_NewsG_Score_All_ref = ifelse(is.na(Average_domain_NewsG_Score_All_ref),NA,Prop_Unreliable_NewsG_Score_All_ref))
+Pulse_data_All <- Pulse_data_All %>% mutate(Prop_Reliable_NewsG_Score_All_ref = ifelse(is.na(Average_domain_NewsG_Score_All_ref),NA,Prop_Reliable_NewsG_Score_All_ref))
+
+
+
+
+
+######Read in pre-treatment Pulse Data:
+Pulse_Pre <- read.csv('data/pulse_vars_pre_ref_SM.csv')
+######Read in post-treatment Pulse Data:
+Pulse_Post <- read.csv('data/pulse_vars_post_ref_SM.csv')
+#Merge Survey Data with digital
+Pulse_data_SM <- Pulse_Pre
+Pulse_data_SM <- merge(Pulse_data_SM,Pulse_Post,by='caseid',all=T)
+####### Pull in DV Data ##############
+Pulse_DV <- read.csv('data/pulse_vars_dv_ref_SM.csv')
+Pulse_data_SM <- merge(Pulse_data_SM,Pulse_DV,by='caseid',all=T)
+Pulse_data_SM <- Pulse_data_SM %>% mutate(Prop_Unreliable_NewsG_Score_dv_SM_ref = ifelse(is.na(Average_domain_NewsG_Score_dv_SM_ref),NA,Prop_Unreliable_NewsG_Score_dv_SM_ref))
+Pulse_data_SM <- Pulse_data_SM %>% mutate(Prop_Reliable_NewsG_Score_dv_SM_ref = ifelse(is.na(Average_domain_NewsG_Score_dv_SM_ref),NA,Prop_Reliable_NewsG_Score_dv_SM_ref))
+Pulse_data_SM <- Pulse_data_SM %>% mutate(Prop_Unreliable_NewsG_Score_post_SM_ref = ifelse(is.na(Average_domain_NewsG_Score_post_SM_ref),NA,Prop_Unreliable_NewsG_Score_post_SM_ref))
+Pulse_data_SM <- Pulse_data_SM %>% mutate(Prop_Reliable_NewsG_Score_post_SM_ref = ifelse(is.na(Average_domain_NewsG_Score_post_SM_ref),NA,Prop_Reliable_NewsG_Score_post_SM_ref))
+Pulse_data_SM <- Pulse_data_SM %>% mutate(Prop_Unreliable_NewsG_Score_SM_ref = ifelse(is.na(Average_domain_NewsG_Score_SM_ref),NA,Prop_Unreliable_NewsG_Score_SM_ref))
+Pulse_data_SM <- Pulse_data_SM %>% mutate(Prop_Reliable_NewsG_Score_SM_ref = ifelse(is.na(Average_domain_NewsG_Score_SM_ref),NA,Prop_Reliable_NewsG_Score_SM_ref))
+
+
+
+Pulse_data_All <- Pulse_data_All %>% select(caseid,
+                                            Average_domain_NewsG_Score_All_ref,
+                                            Prop_Reliable_NewsG_Score_All_ref,
+                                            Prop_Unreliable_NewsG_Score_All_ref,
+                                            Count_Reliable_NewsG_Score_All_ref,
+                                            Count_Unreliable_NewsG_Score_All_ref,
+                                            Average_domain_NewsG_Score_post_All_ref,
+                                            Prop_Reliable_NewsG_Score_post_All_ref,
+                                            Prop_Unreliable_NewsG_Score_post_All_ref,
+                                            Count_Reliable_NewsG_Score_post_All_ref,
+                                            Count_Unreliable_NewsG_Score_post_All_ref,
+                                            Average_domain_NewsG_Score_dv_All_ref,
+                                            Prop_Reliable_NewsG_Score_dv_All_ref,
+                                            Prop_Unreliable_NewsG_Score_dv_All_ref,
+                                            Count_Reliable_NewsG_Score_dv_All_ref,
+                                            Count_Unreliable_NewsG_Score_dv_All_ref)
+
+
+Pulse_data_SM <- Pulse_data_SM %>% select(caseid,
+                                          Average_domain_NewsG_Score_SM_ref,
+                                          Prop_Reliable_NewsG_Score_SM_ref,
+                                          Prop_Unreliable_NewsG_Score_SM_ref,
+                                          Count_Reliable_NewsG_Score_SM_ref,
+                                          Count_Unreliable_NewsG_Score_SM_ref,
+                                          Average_domain_NewsG_Score_post_SM_ref,
+                                          Prop_Reliable_NewsG_Score_post_SM_ref,
+                                          Prop_Unreliable_NewsG_Score_post_SM_ref,
+                                          Count_Reliable_NewsG_Score_post_SM_ref,
+                                          Count_Unreliable_NewsG_Score_post_SM_ref,
+                                          Average_domain_NewsG_Score_dv_SM_ref,
+                                          Prop_Reliable_NewsG_Score_dv_SM_ref,
+                                          Prop_Unreliable_NewsG_Score_dv_SM_ref,
+                                          Count_Reliable_NewsG_Score_dv_SM_ref,
+                                          Count_Unreliable_NewsG_Score_dv_SM_ref)
+
+Pulse_data <- merge(Pulse_data,Pulse_data_All,by='caseid',all=T)
+
+Pulse_data <- merge(Pulse_data,Pulse_data_SM,by='caseid',all=T)
+
+
+write.csv(Pulse_data,'data/Clean_NewsGuard_Digital_Trace_Data.csv')
+
+
+################################  Pulse Mobile ##########################################
+
+
+
+
+
+
+
+
+######Read in pre-treatment Pulse Data:
+Pulse_Pre <- read.csv('data/pulse_vars_mobile_pre.csv')
+Pulse_Pre$totalvisits_pre <- Pulse_Pre$totalvisits
+Pulse_Pre$log_total_pre <- Pulse_Pre$log_total
+######Read in post-treatment Pulse Data:
+Pulse_Post <- read.csv('data/pulse_vars_mobile_post.csv')
+Pulse_Post$totalvisits_post <- Pulse_Post$totalvisits
+Pulse_Post$log_total_post <- Pulse_Post$log_total
+#Merge Survey Data with digital
+Pulse_data <- merge(dataframe_1,Pulse_Pre,by='caseid',all=T)
+Pulse_data <- merge(Pulse_data,Pulse_Post,by='caseid',all=T)
+####### Pull in DV Data ##############
+Pulse_DV <- read.csv('data/pulse_vars_mobile_DV.csv')
+Pulse_DV$totalvisits_dv <- Pulse_DV$totalvisits
+Pulse_DV$log_total_dv <- Pulse_DV$log_total
+Pulse_data <- merge(Pulse_data,Pulse_DV,by='caseid',all=T)
+Pulse_data <- Pulse_data %>% mutate(Prop_Unreliable_NewsG_Score_dv = ifelse(is.na(Average_domain_NewsG_Score_dv),NA,Prop_Unreliable_NewsG_Score_dv))
+Pulse_data <- Pulse_data %>% mutate(Prop_Reliable_NewsG_Score_dv = ifelse(is.na(Average_domain_NewsG_Score_dv),NA,Prop_Reliable_NewsG_Score_dv))
+Pulse_data <- Pulse_data %>% mutate(Prop_Unreliable_NewsG_Score_post = ifelse(is.na(Average_domain_NewsG_Score_post),NA,Prop_Unreliable_NewsG_Score_post))
+Pulse_data <- Pulse_data %>% mutate(Prop_Reliable_NewsG_Score_post = ifelse(is.na(Average_domain_NewsG_Score_post),NA,Prop_Reliable_NewsG_Score_post))
+Pulse_data <- Pulse_data %>% mutate(Prop_Unreliable_NewsG_Score = ifelse(is.na(Average_domain_NewsG_Score),NA,Prop_Unreliable_NewsG_Score))
+Pulse_data <- Pulse_data %>% mutate(Prop_Reliable_NewsG_Score = ifelse(is.na(Average_domain_NewsG_Score),NA,Prop_Reliable_NewsG_Score))
+
+Pulse_data$partisanship_news_diet <- as.numeric(Pulse_data$partisanship_news_diet)
+Pulse_data$abs_part <- abs(Pulse_data$partisanship_news_diet)
+
+
+
+write.csv(Pulse_data,'data/Clean_Mobile_Digital_Trace_Data.csv')
+
+```
+
+
+### Load Functions
+```{r}
+display <- function(num, pct=FALSE){
+  if (!pct) return(sprintf("%.3f", num))
+  if (pct) return(sprintf("%.1f", num*100))
+}
+
+extract_covariates <- function(mod){
+  coefs <- names(coef(mod[[1]]))
+  coefs <- gsub("_c$|Firefox_c", "", coefs)
+  coefs <- coefs[coefs %in% names(svy)]
+  return(coefs)
+}
+
+estimate_cace <- function(Y, D, Z, X, trt, control="Control", data = svy){
+  form <- formula(paste0(Y, " ~ ", D, " + ", paste(X, collapse=" + "),
+                         " | ", Z, " + ", paste(X, collapse=" + ")))
+  dt <- filter(data, Treated %in% c(control, trt))
+  mod <- iv_robust(form, data=dt)
+  return(mod)
+}
+
+# to determine whether we need to run multiple imputation, compute the
+# % of observations with at least one missing value in the covariates.
+# Note that missing values in DV are not included in the estimation.
+# If % of missing values is above 20%, then we will do multiple imputation.
+compute_proportion_missing_covars <- function(mod, more_info=FALSE){
+  # mod = output from run_model()
+  
+  # identify labels for covariates and dv
+  covars <- attr(mod[[1]]$terms, "term.labels")
+  dv <- mod[[1]]$outcome
+  
+  # replacing state dummies with state factor variable
+  if (sum(grepl('state', covars))>0){
+    toreplace <- grep('state', covars)
+    covars[toreplace] <- 'state'
+    covars <- unique(covars)
+  }
+  # replacing race dummies with race factor variable
+  if (sum(grepl('raceeth', covars))>0){
+    toreplace <- grep('raceeth', covars)
+    covars[toreplace] <- 'raceeth'
+    covars <- unique(covars)
+  }  
+  
+  # extract relevant variables from svy file
+  dd <- svy[,c(dv, covars)]
+  
+  # identify rows where DV is not missing
+  no_miss_dv <- which(!is.na(dd[,dv]))
+  
+  # identify rows where at least one covariate has a missing value
+  miss_covars <- apply(svy[no_miss_dv,covars], 1, function(x) any(is.na(x)))
+  
+  # print % of missing values
+  message(display(mean(miss_covars), pct=TRUE), "% missing")
+  
+  if (more_info){
+    print(summary(svy[no_miss_dv,covars]))
+  }
+  
+  return(invisible(mean(miss_covars)))
+}
+
+# Compute power analysis for DIM, ITT and CACE
+power2 <- function(dv, dim, itt, cace, covariates = TRUE, cace_mde = TRUE, D, trt, 
+                   trt_var = "Treated"){
+  message("MDE without covariate adjustment:")
+  pwr_dim <- power.t.test(n = dim$nobs, 
+                          sd = sd(unlist(svy[dv]), na.rm=TRUE),
+                          sig.level = 0.05, power=0.80)
+  message(display(pwr_dim$delta), " (",
+          display(pwr_dim$delta / sd(unlist(svy[,dv]),
+                                     na.rm=TRUE), pct=TRUE),
+          "% of a 1-SD increase in DV)")
+  if (covariates == TRUE){
+    message("MDE with covariate adjustment:")
+    message("Formulas: ", itt[[3]])
+    reg <- summary(lm(itt[[3]], data=svy))
+    ( pwr_itt <- power.t.test(n = itt[[1]]$nobs, 
+                              sd = reg$sigma,
+                              sig.level = 0.05, power=0.80
+    ) )
+    message(display(pwr_itt$delta), " (",
+            display(pwr_itt$delta / sd(unlist(svy[,dv]),
+                                       na.rm=TRUE), pct=TRUE),
+            "% of a 1-SD increase in DV)")
+  }
+  if(cace_mde == TRUE){
+    message("MDE for CACE:") # following Bansak 2020
+    # compute proportion of variation in D/Y left unexplained by Z, 
+    # that is explained by covariates W
+    if(covariates == TRUE){
+      d_z_df <- na.omit(svy[,c(D, extract_covariates(itt))])
+      d_y_df <- na.omit(svy[,c(dv, extract_covariates(itt))])
+      out_d_z <- lm(paste0(D, "~", trt_var), data = d_z_df)
+      out_d_y <- lm(paste0(dv, "~", trt_var), data = d_y_df)
+      out_d_zw <- lm(paste0(D, "~", paste0(c(extract_covariates(itt)), 
+                                           collapse = "+")), data = d_z_df)
+      out_d_yw <- lm(paste0(dv, "~", paste0(c(extract_covariates(itt)), 
+                                            collapse = "+")), data = d_y_df)
+      r2dw <- max(0, ((summary(out_d_z)$sigma)^2 - 
+                        (summary(out_d_zw)$sigma)^2)/((summary(out_d_z)$sigma)^2))
+      r2yw <- max(0, ((summary(out_d_y)$sigma)^2 - 
+                        (summary(out_d_yw)$sigma)^2)/((summary(out_d_y)$sigma)^2))
+    }
+    # compute compliance rate / average causal effect of treatment assignment
+    # on treatment uptake
+    d_z_df <- svy[,c(D, trt_var)]
+    out_d_z <- lm(paste0(D, "~", trt_var), data = d_z_df)
+    compliance_rate <- out_d_z$coefficients[2]
+    # compute conservative (upper) bound for minimum detectable effect size
+    if(covariates == TRUE) {
+      if(length(extract_covariates(itt)) > 1) {
+        pwr_cace <- try(powerLATE::powerLATE.cov(pZ = .5, 
+                                                 pi = compliance_rate, 
+                                                 N = cace$nobs,
+                                                 sig.level = 0.05,
+                                                 power = 0.8,
+                                                 r2dw = r2dw,
+                                                 r2yw = r2yw,
+                                                 effect.size = TRUE,
+                                                 assume.ord.means = TRUE,
+                                                 verbose = FALSE)$output.parameter)
+      }else{
+        pwr_cace <- try(powerLATE::powerLATE(pZ = .5, 
+                                             pi = compliance_rate, 
+                                             N = cace$nobs,
+                                             sig.level = 0.05,
+                                             power = 0.8,
+                                             effect.size = TRUE,
+                                             assume.ord.means = TRUE,
+                                             verbose = FALSE)$output.parameter)    
+      }
+    }else{
+      pwr_cace <- try(powerLATE::powerLATE(pZ = .5, 
+                                           pi = compliance_rate, 
+                                           N = cace$nobs,
+                                           sig.level = 0.05,
+                                           power = 0.8,
+                                           effect.size = TRUE,
+                                           assume.ord.means = TRUE,
+                                           verbose = FALSE)$output.parameter)    
+    }
+    if(class(pwr_cace) == "try-error") {
+      pwr_cace <- NA
+    }
+    message(display(pwr_cace), " (",
+            display(pwr_cace / sd(unlist(svy[,dv]),
+                                  na.rm=TRUE), pct=TRUE),
+            "% of a 1-SD increase in DV)")
+  }
+  if(covariates == FALSE & cace_mde == TRUE){
+    return(data.frame(pwr_itt = c(display(pwr_dim$delta), display(pwr_dim$delta / sd(unlist(svy[,dv]),
+                                                                              na.rm=TRUE))),
+               pwr_cace = c(display(pwr_cace), display(pwr_cace / sd(unlist(svy[,dv]),
+                                                                     na.rm=TRUE)))))
+  }
+  if(covariates == TRUE & cace_mde == TRUE){
+    return(data.frame(pwr_itt = c(display(pwr_itt$delta), display(pwr_itt$delta / sd(unlist(svy[,dv]),
+                                                                                     na.rm=TRUE))),
+                      pwr_cace = c(display(pwr_cace), display(pwr_cace / sd(unlist(svy[,dv]),
+                                                                            na.rm=TRUE)))))
+  }
+  if(covariates == FALSE & cace_mde == FALSE){
+    return(data.frame(pwr_itt = c(display(pwr_dim$delta), display(pwr_dim$delta / sd(unlist(svy[,dv]),
+                                                                              na.rm=TRUE)))))
+  }
+  if(covariates == TRUE & cace_mde == FALSE){
+    return(data.frame(pwr_itt = c(display(pwr_itt$delta), display(pwr_itt$delta / sd(unlist(svy[,dv]),
+                                                                              na.rm=TRUE)))))   
+  } 
+}
+
+
+#Create a function using glmnet lasso that chooses the variables to use:
+Lasso <- function(data_for_analysis) {
+  set.seed(938)
+  lasso_select <- cv.glmnet(x=data.matrix(data_for_analysis[,-1]),
+                            y=as.vector(data_for_analysis[,1]),
+                            alpha=1)
+  
+  coef.out <- coef(lasso_select, exact = TRUE)
+  indices <- which(coef.out != 0)
+  names_of_columns <- c(rownames(coef.out)[indices],colnames(data_for_analysis)[1])
+  names_of_columns_3 <- names_of_columns[!names_of_columns %in% "(Intercept)"]
+  return(names_of_columns_3)
+}
+
+#Clean Data:
+
+Clean <- function(data_for_analysis) {
+  #Replace Infinite values in data with NA
+  data_for_analysis <- do.call(data.frame,                      
+                               lapply(data_for_analysis,
+                                      function(x) replace(x, is.infinite(x), NA)))
+  #Remove NA values:
+  data_for_analysis <- na.omit(data_for_analysis)
+  
+  return(data_for_analysis)
+}
+
+
+
+
+heterogeneous_effect2 <- function(dv, dv_pre=NULL, trt, control, moderator){
+  itt <- run_model(dv = dv, dv_pre = dv_pre, trt = trt, verbose=FALSE)
+  vars <- unique(c(extract_covariates(itt), moderator))
+  # now compute itt but adding moderator (if it wasn't included)
+  lin_formula <- formula(paste0(dv, " ~ W3_PATA306_treatment_w3"))
+  lin_covars <- formula(paste0(" ~ ", paste(vars, collapse = " + ")))
+  res <- lm_lin(lin_formula, covariates = lin_covars,
+                data=svy[svy$W3_PATA306_treatment_w3 %in% c(control, trt),])
+  # extract t stat for interaction
+  interaction_t <- res$statistic[grep(paste0(":", moderator), names(res$statistic))]
+  sig <- ifelse(
+    interaction_t > 1.96, "+",
+    ifelse(interaction_t < (-1.96), "-", "n.s.")
+  )
+  return(sig)
+}
+```
+
+
+# Replicating Figure 5
+```{r include=FALSE}
+#Read in survey data with digital trace data:
+
+library(lifecycle)
+library(readr)
+
+Pulse_data <- read.csv('data/Clean_NewsGuard_Digital_Trace_Data.csv',
+                       colClasses = c(
+                         BLM_info_Index_w2 = "numeric",
+                         Covid_info_Index_w2 = "numeric",
+                         BLM_Misinfo_Index_w2 = "numeric",
+                         Covid_Misinfo_Index_w2 = "numeric",
+                         Trust_Media_w2 = "numeric",
+                         SMP4310_w2 = "numeric",
+                         SMP4310 = "numeric",
+                         Treated = "numeric",
+                         Complied = "numeric",
+                         compliance_check_1 = "numeric",
+                         Total_DL =  "numeric",
+                         Total_Science_Misinfo  =  "numeric",
+                         Social_Media_Use =  "numeric",
+                         income_score =  "numeric",
+                         abs_part =  "numeric",
+                         aff_pol_w2 = "numeric",
+                         aff_pol_w1 = "numeric",
+                         mean_cons =  "numeric",
+                         Average_domain_NewsG_Score_post = "numeric",
+                         Average_domain_NewsG_Score = "numeric",
+                         Prop_Unreliable_NewsG_Score_post = "numeric",
+                         Prop_Unreliable_NewsG_Score = "numeric",
+                         Prop_Reliable_NewsG_Score_post = "numeric",
+                         Prop_Reliable_NewsG_Score = "numeric",
+                         Count_Unreliable_NewsG_Score_post = "numeric",
+                         Count_Unreliable_NewsG_Score = "numeric",
+                         Count_Reliable_NewsG_Score_post = "numeric",
+                         Count_Reliable_NewsG_Score = "numeric",
+                         Prop_Unreliable_NewsG_Score_dv = "numeric",
+                         Average_domain_NewsG_Score_dv = "numeric",
+                         Prop_Reliable_NewsG_Score_dv = "numeric",
+                         Count_Unreliable_NewsG_Score_dv = "numeric",
+                         Count_Reliable_NewsG_Score_dv = "numeric",
+                         Average_domain_NewsG_Score_post_dur = "numeric",
+                         Average_domain_NewsG_Score_dur = "numeric",
+                         Prop_Unreliable_NewsG_Score_post_dur = "numeric",
+                         Prop_Unreliable_NewsG_Score_dur = "numeric",
+                         Prop_Reliable_NewsG_Score_post_dur = "numeric",
+                         Prop_Reliable_NewsG_Score_dur = "numeric",
+                         Count_Unreliable_NewsG_Score_post_dur = "numeric",
+                         Count_Unreliable_NewsG_Score_dur = "numeric",
+                         Count_Reliable_NewsG_Score_post_dur = "numeric",
+                         Count_Reliable_NewsG_Score_dur = "numeric",
+                         Prop_Unreliable_NewsG_Score_dv_dur = "numeric",
+                         Average_domain_NewsG_Score_dv_dur = "numeric",
+                         Prop_Reliable_NewsG_Score_dv_dur = "numeric",
+                         Count_Unreliable_NewsG_Score_dv_dur = "numeric",
+                         Count_Reliable_NewsG_Score_dv_dur = "numeric",
+                         Prop_Unreliable_NewsG_Score_dv_SM_ref = "numeric",
+                         Average_domain_NewsG_Score_dv_SM_ref = "numeric",
+                         Prop_Reliable_NewsG_Score_dv_SM_ref = "numeric",
+                         Count_Unreliable_NewsG_Score_dv_SM_ref = "numeric",
+                         Count_Reliable_NewsG_Score_dv_SM_ref = "numeric",
+                         Average_domain_NewsG_Score_post_SM_ref = "numeric",
+                         Average_domain_NewsG_Score_SM_ref = "numeric",
+                         Prop_Unreliable_NewsG_Score_post_SM_ref = "numeric",
+                         Prop_Unreliable_NewsG_Score_SM_ref = "numeric",
+                         Prop_Reliable_NewsG_Score_post_SM_ref = "numeric",
+                         Prop_Reliable_NewsG_Score_SM_ref = "numeric",
+                         Count_Unreliable_NewsG_Score_post_SM_ref = "numeric",
+                         Count_Unreliable_NewsG_Score_SM_ref = "numeric",
+                         Count_Reliable_NewsG_Score_post_SM_ref = "numeric",
+                         Count_Reliable_NewsG_Score_SM_ref = "numeric",
+                         Prop_Unreliable_NewsG_Score_dv_All_ref = "numeric",
+                         Average_domain_NewsG_Score_dv_All_ref = "numeric",
+                         Prop_Reliable_NewsG_Score_dv_All_ref = "numeric",
+                         Count_Unreliable_NewsG_Score_dv_All_ref = "numeric",
+                         Count_Reliable_NewsG_Score_dv_All_ref = "numeric",
+                         Average_domain_NewsG_Score_post_All_ref = "numeric",
+                         Average_domain_NewsG_Score_All_ref = "numeric",
+                         Prop_Unreliable_NewsG_Score_post_All_ref = "numeric",
+                         Prop_Unreliable_NewsG_Score_All_ref = "numeric",
+                         Prop_Reliable_NewsG_Score_post_All_ref = "numeric",
+                         Prop_Reliable_NewsG_Score_All_ref = "numeric",
+                         Count_Unreliable_NewsG_Score_post_All_ref = "numeric",
+                         Count_Unreliable_NewsG_Score_All_ref = "numeric",
+                         Count_Reliable_NewsG_Score_post_All_ref = "numeric",
+                         Count_Reliable_NewsG_Score_All_ref = "numeric",
+                         gender_dummy_fem = "numeric",
+                         educ_score = "numeric",
+                         Age = "numeric",
+                         Age_Sq = "numeric",
+                         SMP4326_w2 = "numeric",
+                         SMP4326 = "numeric",
+                         Trust_inst_w2 = "numeric",
+                         Trust_inst_w1 = "numeric",
+                         Pol_cyn_2 = "numeric",
+                         Pol_cyn_1 = "numeric",
+                         Fox_Trust_2 = "numeric",
+                         Fox_Trust_1 = "numeric",
+                         CNN_Trust_2 = "numeric",
+                         CNN_Trust_1 = "numeric",
+                         ABC_Trust_2 = "numeric",
+                         ABC_Trust_1 = "numeric",
+                         NBC_Trust_2 = "numeric",
+                         NBC_Trust_1 = "numeric",
+                         CBS_Trust_2 = "numeric",
+                         CBS_Trust_1 = "numeric",
+                         party_score = "numeric",
+                         race_white = "numeric",
+                         ideo_score = "numeric",
+                         Trust_Media_w1 = "numeric",
+                         trust_news = "numeric",
+                         trust_news_sm = "numeric",
+                         cons_news = "numeric"
+                       ))
+
+
+
+
+#List of possible variables for inclusion:
+list_possible_covariates <- c("gender_dummy_fem",
+                              "educ_score",
+                              "Age",
+                              "Age_Sq",
+                              "party_score",
+                              "race_white",
+                              "ideo_score",
+                              "Trust_Media_w1",
+                              "trust_news",
+                              "trust_news_sm",
+                              "cons_news_n",
+                              "cons_cable",
+                              "cons_print",
+                              "cons_public", 
+                              "cons_talk",
+                              "cons_desk",
+                              "cons_mobile",
+                              "log_news",
+                              "Safari_dummy",
+                              "IE_dummy",
+                              "Chrome_dummy",
+                              "Firefox_dummy",
+                              "Social_Media_Use")
+
+#Create Sets of variables to use in models:
+list_variables_to_run_1 = list(c('Prop_Unreliable_NewsG_Score_dv','Prop_Unreliable_NewsG_Score'),
+                               c('Prop_Reliable_NewsG_Score_dv','Prop_Reliable_NewsG_Score'),
+                               c('Count_Unreliable_NewsG_Score_dv','Count_Unreliable_NewsG_Score'),
+                               c('Count_Reliable_NewsG_Score_dv','Count_Reliable_NewsG_Score'),
+                               c('Average_domain_NewsG_Score_dv','Average_domain_NewsG_Score'),
+                               c('Prop_Unreliable_NewsG_Score_post','Prop_Unreliable_NewsG_Score'),
+                               c('Prop_Reliable_NewsG_Score_post','Prop_Reliable_NewsG_Score'),
+                               c('Count_Unreliable_NewsG_Score_post','Count_Unreliable_NewsG_Score'),
+                               c('Count_Reliable_NewsG_Score_post','Count_Reliable_NewsG_Score'),
+                               c('Average_domain_NewsG_Score_post','Average_domain_NewsG_Score'))
+
+#Create list of Titles:
+Titles <- c('Testing the Effect of the Intervention on Proportion of News Diet That is Unreliable with Covariate-Adjusted Models (HC2 Robust standard errors) (Before July 1st)',
+            'Testing the Effect of the Intervention on Proportion of News Diet That is Reliable with Covariate-Adjusted Models (HC2 Robust standard errors) (Before July 1st)',
+            'Testing the Effect of the Intervention on Count of Unreliable News Consumed with Covariate-Adjusted Models (HC2 Robust standard errors) (Before July 1st)',
+            'Testing the Effect of the Intervention on Count of Reliable News Consumed with Covariate-Adjusted Models (HC2 Robust standard errors) (Before July 1st)',
+            'Testing the Effect of the Intervention on Reliability Score of News Diet with Covariate-Adjusted Models (HC2 Robust standard errors) (Before July 1st)',
+            'Testing the Effect of the Intervention on Proportion of News Diet That is Unreliable with Covariate-Adjusted Models (HC2 Robust standard errors) (After July 1st)',
+            'Testing the Effect of the Intervention on Proportion of News Diet That is Reliable with Covariate-Adjusted Models (HC2 Robust standard errors) (After July 1st)',
+            'Testing the Effect of the Intervention on Count of Unreliable News Consumed with Covariate-Adjusted Models (HC2 Robust standard errors) (After July 1st)',
+            'Testing the Effect of the Intervention on Count of Reliable News Consumed with Covariate-Adjusted Models (HC2 Robust standard errors) (After July 1st)',
+            'Testing the Effect of the Intervention on Reliability Score of News Diet with Covariate-Adjusted Models (HC2 Robust standard errors) (After July 1st)')
+
+#Create crosswalk for variables and display names:
+top_attribute_names <- c("gender_dummy_fem",
+                         "educ_score",
+                         'Treated',
+                         "Age",
+                         "Age_Sq",
+                         "party_score",
+                         "race_white",
+                         "ideo_score",
+                         "Trust_Media_w1",
+                         "trust_news",
+                         "trust_news_sm",
+                         "cons_news_n",
+                         "cons_cable",
+                         "cons_print",
+                         "cons_public", 
+                         "cons_talk",
+                         "cons_desk",
+                         "cons_mobile",
+                         "Safari_dummy",
+                         "log_news",
+                         'Prop_Unreliable_NewsG_Score',
+                         'Prop_Reliable_NewsG_Score',
+                         'Count_Unreliable_NewsG_Score',
+                         'Count_Reliable_NewsG_Score',
+                         'Average_domain_NewsG_Score',
+                         'compliance_check_1',
+                         'Complied',
+                         "IE_dummy",
+                         "Chrome_dummy",
+                         "Firefox_dummy",
+                         "Social_Media_Use")
+
+top_attributes_html <- c('Gender',
+                         'Education',
+                         'Treatment',
+                         'Age',
+                         'Age-Squared',
+                         "Party ID",
+                         "Race/Ethnicity",
+                         "Ideology ",
+                         "Trust in Media",
+                         "Trust of news in newspapers",
+                         "Trust of news on social media ",
+                         "News consumption (network news)",
+                         "News consumption (cable news)",
+                         "News consumption (print news) ",
+                         "News consumption (public radio)", 
+                         "News consumption (talk radio)",
+                         "News consumption (news on desktop)",
+                         "News consumption (news on mobile)",
+                         "Web Browser (Safari)",
+                         "Log of news viewed",
+                         'Pre-Treatment Value',
+                         'Pre-Treatment Value',
+                         'Pre-Treatment Value',
+                         'Pre-Treatment Value',
+                         'Pre-Treatment Value',
+                         'Treatment',
+                         'Treatment',
+                         "Internet Explorer Browser",
+                         "Chrome Browser",
+                         "Firefox Browser",
+                         "Social Media use")
+
+names(top_attributes_html) <- top_attribute_names
+
+
+Decile_Names <- c('Bottom 10 Percent',
+                  'Bottom 20 Percent',
+                  'Bottom 30 Percent',
+                  'Bottom 40 Percent',
+                  'Bottom 50 Percent',
+                  'Bottom 60 Percent',
+                  'Bottom 70 Percent',
+                  'Bottom 80 Percent',
+                  'Bottom 90 Percent',
+                  'Whole Sample')
+
+Deciles <- quantile(Pulse_data$Average_domain_NewsG_Score, prob = c(0.1,0.2,0.3,0.4,0.5,0.60,0.70,0.80,0.90,1.0),na.rm=T)
+
+
+i=1
+x=1
+
+#i=5
+#i=10
+for(i in 1:length(list_variables_to_run_1)){
+  list_possible_covariates_for_use <- c(list_variables_to_run_1[[i]],list_possible_covariates)
+  data_for_analysis <- Pulse_data %>% ungroup() %>% select(`list_possible_covariates_for_use`)
+  
+  #Clean Data:
+  data_for_analysis <- Clean(data_for_analysis)
+  
+  #Use glmnet lasso to choose covariates to be a part of model:
+  names_of_columns <- Lasso(data_for_analysis)
+  
+  #names_of_columns
+  names_of_columns <- c('Treated',names_of_columns)
+  
+  new_matr <- matrix(ncol=6)
+  if(i == 5){
+    ci_matr <- matrix(ncol=4)
+  }
+  if(i == 10){
+    ci_matr_2 <- matrix(ncol=4)
+  }
+  #x=1
+  #x=2
+  for(x in 1:length(Deciles)){
+    #Pulse_data_2 <- Pulse_data %>% filter(Prop_Unreliable_NewsG_Score >= Deciles[x])
+    Pulse_data_2 <- Pulse_data %>% filter(Average_domain_NewsG_Score <= Deciles[x])
+    
+    names_use <- names(Pulse_data_2)[(names(Pulse_data_2) %in% names_of_columns)]
+    
+    data_for_analysis <- Pulse_data_2[, names_use]
+    data_for_analysis <- Clean(data_for_analysis)
+    
+    f <- paste0(list_variables_to_run_1[[i]][1], " ~ .")
+    
+    ITT_Model <- lm_robust(as.formula(f), data = data_for_analysis)
+    
+    
+    names_of_columns_2 <- c(names_of_columns,'compliance_check_1')
+    names_use <- names(Pulse_data_2)[(names(Pulse_data_2) %in% names_of_columns_2)]
+    data_for_analysis <- Pulse_data_2[, names_use]
+    
+    #Clean Data:
+    data_for_analysis <- Clean(data_for_analysis)
+    
+    f <- paste0(list_variables_to_run_1[[i]][1], '~ . - Treated | . - compliance_check_1')
+    
+    #CACE Model 1
+    CACE_Model_1 <- iv_robust(as.formula(f), data = data_for_analysis)
+    
+    CACE_Model_1$term[which(CACE_Model_1$term == "compliance_check_1")] <- 'Treated'
+    
+    # #CACE Model 2 - Passed first and second wave compliance check
+    names_of_columns_3 <- c(names_of_columns,'Complied')
+    names_use <- names(Pulse_data_2)[(names(Pulse_data_2) %in% names_of_columns_3)]
+    data_for_analysis <- Pulse_data_2[, names_use]
+    #Clean Data:
+    data_for_analysis <- Clean(data_for_analysis)
+    f <- paste0(list_variables_to_run_1[[i]][1], '~  . - Treated | . - Complied')
+    CACE_Model_2 <- iv_robust(as.formula(f), data = data_for_analysis)
+    
+    CACE_Model_2$term[which(CACE_Model_2$term == "Complied")] <- 'Treated'
+    
+    #names of the variables:
+    Variable_Names <- names(ITT_Model$coefficients)[-1]
+    Variable_Names <- str_replace_all(Variable_Names, top_attributes_html)
+    for(z in 1:length(names(coef(ITT_Model)))){
+      if(names(coef(ITT_Model))[z] == 'Treated'){
+        ITT_coef = round(coef(ITT_Model)[z],3)
+        ITT_SD = round(coef(summary(ITT_Model))[, "Std. Error"][z],3)
+        ITT_P = coef(summary(ITT_Model))[, "Pr(>|t|)"][z]
+        ITT_ci_upper = round(confint(ITT_Model)[z,2],3)
+        ITT_ci_lower = round(confint(ITT_Model)[z,1],3)
+      }
+    }
+    
+    for(z in 1:length(names(coef(CACE_Model_1)))){
+      if(names(coef(CACE_Model_1))[z] == 'compliance_check_11' | names(coef(CACE_Model_1))[z] == 'compliance_check_1'){
+        C_1_coef = round(coef(CACE_Model_1)[z],3)
+        C_1_SD = round(coef(summary(CACE_Model_1))[, "Std. Error"][z],3)
+        C_1_P = coef(summary(CACE_Model_1))[, "Pr(>|t|)"][z]
+      }
+    }
+    
+    for(z in 1:length(names(coef(CACE_Model_2)))){
+      if(names(coef(CACE_Model_2))[z] == 'Complied'){
+        C_2_coef = round(coef(CACE_Model_2)[z],3)
+        C_2_SD = round(coef(summary(CACE_Model_2))[, "Std. Error"][z],3)
+        C_2_P = coef(summary(CACE_Model_2))[, "Pr(>|t|)"][z]
+      }
+    }
+    
+    Stars_I_P = ''
+    if(ITT_P < 0.05){
+      Stars_I_P = '*'
+    }
+    if(ITT_P < 0.01){
+      Stars_I_P = '**'
+    }
+    if(ITT_P < 0.001){
+      Stars_I_P = '***'
+    }
+    
+    Stars_C_1 = ''
+    if(C_1_P < 0.05){
+      Stars_C_1 = '*'
+    }
+    if(C_1_P < 0.01){
+      Stars_C_1 = '**'
+    }
+    if(C_1_P < 0.001){
+      Stars_C_1 = '***'
+    }
+    
+    Stars_C_2 = ''
+    if(C_2_P < 0.05){
+      Stars_C_2 = '*'
+    }
+    if(C_2_P < 0.01){
+      Stars_C_2 = '**'
+    }
+    if(C_2_P < 0.001){
+      Stars_C_2 = '***'
+    }
+    ITT_1 <- paste0(ITT_coef,' (',ITT_SD,')',Stars_I_P)
+    CACE_1 <- paste0(C_1_coef,' (',C_1_SD,')',Stars_C_1)
+    CACE_2 <- paste0(C_2_coef,' (',C_2_SD,')',Stars_C_2)
+    Prop_F <- as.character(round(Deciles[x],3))
+    Num_Obs <- nrow(data_for_analysis)
+    new_matr <- rbind(new_matr,c(Decile_Names[x],Prop_F,ITT_1,CACE_1,CACE_2,Num_Obs))
+    
+    if(i == 5){
+      ci_matr <- rbind(ci_matr,
+                       c(Decile_Names[x],ITT_ci_lower,ITT_coef,ITT_ci_upper))
+    }
+    if(i == 10){
+      ci_matr_2 <- rbind(ci_matr_2,
+                         c(Decile_Names[x],ITT_ci_lower,ITT_coef,ITT_ci_upper))
+    }
+  }
+  colnames(new_matr) <- c('Decile','Threshold','ITT Model','CACE Model (Weak Compliance Measure)','CACE Model (Strong Compliance Measure)','Sample Size')
+  new_matr <- new_matr[-1,]
+  
+}
+
+
+
+
+colnames(ci_matr) <- c('Decile','L_CI','Coef','U_CI')
+ci_matr <- ci_matr[-1,]
+ci_matr <- as.data.frame(ci_matr)
+
+ci_matr$L_CI <- as.character(ci_matr$L_CI)
+ci_matr$Coef <- as.character(ci_matr$Coef)
+ci_matr$U_CI <- as.character(ci_matr$U_CI)
+ci_matr$L_CI <- as.numeric(ci_matr$L_CI)
+ci_matr$Coef <- as.numeric(ci_matr$Coef)
+ci_matr$U_CI <- as.numeric(ci_matr$U_CI)
+
+colnames(ci_matr_2) <- c('Decile','L_CI','Coef','U_CI')
+ci_matr_2 <- ci_matr_2[-1,]
+ci_matr_2 <- as.data.frame(ci_matr_2)
+
+ci_matr_2$L_CI <- as.character(ci_matr_2$L_CI)
+ci_matr_2$Coef <- as.character(ci_matr_2$Coef)
+ci_matr_2$U_CI <- as.character(ci_matr_2$U_CI)
+ci_matr_2$L_CI <- as.numeric(ci_matr_2$L_CI)
+ci_matr_2$Coef <- as.numeric(ci_matr_2$Coef)
+ci_matr_2$U_CI <- as.numeric(ci_matr_2$U_CI)
+
+
+ci_matr_2$Period <- 'July 1st - July 13th'
+ci_matr$Period <- 'Before July 1st'
+
+Decile_ci <- rbind(ci_matr,ci_matr_2)
+
+Decile_ci$Decile <- gsub('Whole Sample','Bottom 100 Percent',Decile_ci$Decile)
+Decile_ci$Decile <- gsub('Bottom ','',Decile_ci$Decile)
+Decile_ci$Decile <- gsub(' Percent','%',Decile_ci$Decile)
+
+
+Decile_ci$Decile <- factor(Decile_ci$Decile,levels=c('100%',
+                                                     '90%',
+                                                     '80%',
+                                                     '70%',
+                                                     '60%',
+                                                     '50%',
+                                                     '40%',
+                                                     '30%',
+                                                     '20%',
+                                                     '10%'))
+
+Decile_ci <- Decile_ci %>% arrange(Decile,Period)
+
+
+#Decile Figure
+
+
+Decile_ci$x <-c(0.2,0.3,0.5,0.6,0.8,0.9,1.1,1.2,1.4,1.5,1.7,1.8,2.0,2.1,2.3,2.4,2.6,2.7,2.9,3.0)
+
+# Load necessary libraries
+library(ggplot2)
+
+# Assuming Decile_ci is a data frame already defined
+# Decile_ci should contain columns: x, Coef, Period, L_CI, U_CI
+
+```
+
+##Produce Figure 5
+```{r}
+# Create the plot
+# Load necessary libraries
+library(ggplot2)
+
+# Assuming Decile_ci is a data frame already defined
+# Decile_ci should contain columns: x, Coef, Period, L_CI, U_CI
+
+# Define the plot
+p <- ggplot(data = Decile_ci, aes(x = x, y = Coef)) +
+  geom_hline(aes(yintercept = 0), color = "gray", linetype = 2, size = 1.2) +
+  geom_point(aes(color = Period, shape = Period), size = 4) +
+  geom_linerange(aes(ymin = L_CI, ymax = U_CI, color = Period), size = 1.5) +
+  scale_color_manual(values = c('red', 'blue', 'purple'), name = "Period") +
+  ylab("\n Effect NewsGuard on \n Avg Reliability Score News Diet (0-100") +
+  theme_classic() + 
+  theme(
+    legend.position = "bottom",
+    axis.text.x = element_text(angle = 45, size = 10),
+    axis.text.y = element_text(size = 10)
+  ) +
+  theme(
+    axis.title.x = element_text(size = 14),
+    axis.text.x = element_text(size = 10),
+    axis.title.y = element_text(size = 14),
+    axis.text.y = element_text(size = 10),
+    plot.title = element_text(size = 14),
+    legend.title = element_text(size = 14),
+    legend.text = element_text(size = 12)
+  ) +
+  ylim(-0.75, 10) +
+  scale_x_continuous(
+    "\n Percentage of Respondents Included in Subsample\n(Pre-Treatment Avg News Reliability Score Decile Cutpoint in Parentheses)",
+    breaks = c(0.25, 0.55, 0.85, 1.15, 1.45, 1.75, 2.05, 2.35, 2.65, 2.95),
+    labels = c(
+      '100%\n(<100.0)', '90%\n(<95)', '80%\n(<92.5)', '70%\n(<90.8)', '60%\n(<90.0)',
+      '50%\n(<89.2)', '40%\n(<88.4)', '30%\n(<87.5)', '20%\n(<85.3)', '10%\n(<78.3)'
+    ),
+    limits = c(0.15, 3.05)
+  )
+
+# Print the plot
+print(p)
+
+
+```
+
+------------------------------------------------------------------------
+
+## Section 3: Extension 
+**Theory that Challenges Article Findings**: Exposure/engagement to fake news media does not necessarily imply that users believe the content they consume. Rather, there is a possibility that the largest consumers of fake news media are Internet trolls who do not believe false content but enjoy virality and controversy. This is a logical assumption by simple definition of trolls: which are users whose Internet activity is aimed at deliberately upsetting users of online forums or social media (Birkbak, 2018).In fact, even former contacts of the most prolific propagators of misinformation (i.e., those who have denied major tragedies like Sandy Hook and the Manchester concert bombing) have revealed that these propagators are covert trolls who have privately admitted that their online campaigns are "all nonsense" (Spring, 2023.) The implication further underlines the fact that trolls can distinguish truth from misinformation and their engagement with fake news sources is for the sole purpose of being provocative, inflammatory, or humorous (Lopez & Hillygus, 2018). As a result, some articles find that troll activity (and engagement with such activity from regular users), "tricks" social media algorithms into pushing fake news media into a broad array of users' feeds (Kendall, 2019). It is therefore worth exploring if there is a relationship between the amount of people who self-identify as frequent trolls and the amount of fake news that is pushed down people's feeds.
+
+
+**Our Hypothesis for a New Table**: We anticipate that participants who engage in frequent trolling (scores of 4 or 5, "most of the time" or "always") will purposefully visit unreliable news sources which will therefore make these pages/articles at the top of their social media feeds/on the first page of their Google searches. More specifically, we anticipate the relationship between trolling and moving false content downward to be negative (i.e., as users troll more, false content will be pushed upward in their feed). If this is the case, then further research will need to be done to determine if exposure to fake news necessarily implies belief in such news. 
+
+
+**Controls** We believe that there are certain traits that are shared between individuals who engage in trolling and one's propensity to consume misinformation. Our research considers multiple factors, including age, gender, and education because they have been significantly linked to both misinformation consumption and trolling. Prior studies show that people with higher education have a lower tendency to consume false information compared to those with less education (Morosoli et al., 2022). A similar trend is seen in trolling as more educated individuals are less likely to troll and vice-versa (Howard et al., 2019). Additionally, studies show that men and women behave differently when it comes to trolling online. Men are more likely to share misinformation than women, which can be attributed to differences in online behavior between the genders (Chadwick & Vaccari, 2019; Van Duyn et al., 2021). Even though other studies suggest that, in addition to education and gender, age also plays an important role in the dissemination of misinformation, research into the effect of age in the context of misinformation dissemination remains unclear. The reason lies in the fact that, while some studies have found older people are more likely to engage with misleading content, younger users also frequently engage in trolling on social media (Morosoli et al., 2022) 
+
+
+**Illustrating the Causal Mechanism**
+*Legend*
+"Trolling" - Trol
+"Gender" - Gen
+Misinf" - Reduced_Audience
+"Age" - Birth_year
+"Ed" - Education
+
+### Trolling x Misinformation DAG
+```{r}
+library(ggdag)
+
+dag_image <- ggdag::dagify(
+  Misinf ~ Trol,
+  Trol ~ Gen,
+  Trol ~ Age,
+  Trol ~ Ed,
+  Misinf ~ Gen,
+  Misinf ~ Age,
+  Misinf ~ Ed,
+  exposure = "Trol",
+  outcome = "Misinf")
+
+# Reduce label size using geom_dag_label (try label)
+ggdag::ggdag(dag_image) + 
+  theme_void()
+
+```
+
+
+### Trolling x Misinformation Regression Table
+```{r}
+# First we clean the columns of the relevant variables to remove NA values.
+wave_2_clean <- na.omit(Wave_2_Data[, c("SMP6330_w2_2", "SMP8886_w2", "gender_w2", "birthyr_w2", "educ_w2")])
+
+# Since the variables used are categorical/ordinal in nature, we must factorize them to successfully run a regression. 
+extension_test1 <- glm(factor(SMP6330_w2_2) ~ factor(SMP8886_w2) + factor(gender_w2) + birthyr_w2 + factor(educ_w2),
+                      data = wave_2_clean,
+                      family = "binomial")
+
+# A clean table is generated to assess the results. 
+model_summary <- modelsummary::modelsummary(extension_test1,
+                                            stars = c('*' = .1, '**' = .05, '***' = .01),
+                                            statistic = 'conf.int',
+                                            gof_omit = "AIC|BIC|Log.Lik.",
+                                            fmt = 2)
+print(model_summary)
+
+```
+
+
+------------------------------------------------------------------------
+#Findings & Further Recommendations
+
+Looking at the highest frequency of trolling (i.e., "most of the time"), the model estimates a coefficient of 0.59 on the log-odds scale for selecting to move an unreliable news source down. However, this coefficient is not statistically significant, so the data do not clearly support our hypothesis that trolling leads to selective self-exposure to unreliable news sources. This does not show that the hypothesis is false. The sample may be too small or the measures too coarse, so the question deserves further research.
+
+Another mechanism to identify belief in misinformation could be indicated by the number of likes and reshares received to these links by individuals within their individual social media feeds. This could be a better indicator than just identifying news diets as there is a reputational cost associated with liking or sharing a piece of information (Aslett et al., 2022, p. 7). This mechanism could be carried out while adjusting for the highest level of trolling as these individuals would be more likely to share pieces of misinformation.
+
+
+------------------------------------------------------------------------
+## References
+Aslett, K., Guess, A. M., Bonneau, R., Nagler, J., & Tucker, J. A. (2022). News credibility labels have limited average effects on news diet quality and fail to reduce misperceptions. *Science Advances*, 8(18), eabl3844. https://doi.org/10.1126/sciadv.abl3844
+
+Birkbak, A. (2018). Into the wild online: Learning from Internet trolls. First Monday, 
+23(5),3.
+
+Griffiths, M. D. (2014). Adolescent trolling in online environments: A brief overview. Education and Health, 32(3), 85-87.
+
+Howard, K., Zolnierek, K. H., Critz, K., Dailey, S., & Ceballos, N. (2019). An examination of psychosocial factors associated with malicious online trolling behaviors. Personality and Individual Differences, 149, 309-314.
+
+Kendall, L. (2019, September 17). How to deal with hate on social media: Don’t feed the trolls .
+
+Horizons. https://blog.horizonsnhs.com/post/102fqw0/how-to-deal-with-hate-on-social-media-dont-feed-the-trolls
+
+Lopez, J., & Hillygus, D. S. (2018). Why so serious?: Survey trolls and misinformation. Why so serious.
+
+Spring, M. (2023, April 8). Do “disaster trolls” believe the conspiracy theories they promote? BBC News. https://www.bbc.com/news/uk-65201949
+
+Morosoli, S., Van Aelst, P., Humprecht, E., Staender, A., & Esser, F. (2022). Identifying the Drivers Behind the Dissemination of Online Misinformation: A Study on Political Attitudes and Individual Characteristics in the Context of Engaging With Misinformation on Social Media. American Behavioral Scientist, 000276422211183. https://doi.org/10.1177/00027642221118300
+
+Vaccari, C., & Chadwick, A. (2020). Deepfakes and Disinformation: Exploring the impact of synthetic political video on deception, uncertainty, and trust in news. Social Media + Society, 6(1), 205630512090340. https://doi.org/10.1177/2056305120903408
+
+
+
+
+
+
+
+
+```
+
