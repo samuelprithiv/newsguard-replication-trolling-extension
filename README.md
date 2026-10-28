@@ -13,7 +13,7 @@ Original replication code and data: https://github.com/SMAPPNYU/Labels_Have_Limi
 ## My contribution
 
 - Wrote the paper-summary sections on causal identification challenges and on the authors' research design.
-- Re-ran, checked and adapted the authors' replication code in R for the figure replication: [state specifically what you did, e.g. data cleaning, merging survey waves with browsing data, instrumental-variable estimates, power calculations].
+- Re-ran, checked and adapted the authors' replication code in R for the figure replication: [data cleaning, merging survey waves with browsing data, instrumental-variable estimates, power calculations].
 - Proposed the trolling extension in the group's brainstorm and developed it: (wrote the hypothesis, built the causal diagram, ran the regression].
 
 My co-authors wrote the remaining sections of the report. The data and the base code come from the original authors and the course.
